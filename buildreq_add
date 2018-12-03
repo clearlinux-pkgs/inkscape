@@ -1,0 +1,17 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+ImageMagick-dev
+intltool
+intltool-dev
+gtkmm3-dev
+glibmm-dev
+libjpeg-turbo-dev
+buildreq-gnome
+boost-dev
+ImageMagick
+lcms2-dev
+popt-dev
+pango-dev
+cairo-dev
+aspell-dev
+potrace-dev
