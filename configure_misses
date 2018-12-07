@@ -1,0 +1,14 @@
+Configure miss: overzealous strict aliasing warnings
+Configure miss: Win32 platform
+Configure miss: OSX platform
+Configure miss: Solaris platform
+Configure miss: gnome-vfs-2.0 >= 2.0
+Configure miss: poppler >= 0.20.0
+Configure miss: poppler >= 0.26.0
+Configure miss: poppler >= 0.29.0
+Configure miss: poppler >= 0.58.0
+Configure miss: ImageMagick++
+Configure miss: whether C++11 mode is required
+Configure miss: pango = 1.32.4
+Configure miss: whether binary relocation support should be enabled
+Configure miss: fpsetmask

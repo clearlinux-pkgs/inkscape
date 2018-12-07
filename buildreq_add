@@ -17,3 +17,5 @@ aspell-dev
 potrace-dev
 gtkmm2-dev
 atkmm-dev
+libwpg-dev
+dbus-dev

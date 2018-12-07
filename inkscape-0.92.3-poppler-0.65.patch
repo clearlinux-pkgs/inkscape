@@ -1,0 +1,23 @@
+From fa1c469aa8c005e07bb8676d72af9f7c16fae3e0 Mon Sep 17 00:00:00 2001
+From: Jan Palus <atler@pld-linux.org>
+Date: Fri, 25 May 2018 00:30:17 +0200
+Subject: Fix compilation with poppler 0.65.0
+
+replace unused includes with one that is actually used
+
+Signed-off-by: Jan Palus <atler@pld-linux.org>
+
+diff --git a/src/extension/internal/pdfinput/pdf-parser.cpp b/src/extension/internal/pdfinput/pdf-parser.cpp
+index 6c498f9812..caaeca18e0 100644
+--- a/src/extension/internal/pdfinput/pdf-parser.cpp
++++ b/src/extension/internal/pdfinput/pdf-parser.cpp
+@@ -37,8 +37,7 @@ extern "C" {
+ #include "util/units.h"
+ 
+ #include "goo/gmem.h"
+-#include "goo/GooTimer.h"
+-#include "goo/GooHash.h"
++#include "goo/GooString.h"
+ #include "GlobalParams.h"
+ #include "CharTypes.h"
+ #include "Object.h"

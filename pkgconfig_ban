@@ -1,8 +1,6 @@
 # This file contains pkgconfig build requirements that get picked up
 # but are undesirable. One entry per line, no whitespace.
-gdkmm-2.4
 gnome-vfs-2.0
-gtkmm-2.4
 lcms
 libcdr-0.0
 libvisio-0.0
@@ -11,3 +9,6 @@ libwpd-0.9
 libwpd-stream-0.9
 libwpg-0.2
 ImageMagick++
+poppler
+poppler-cairo
+poppler-glib
