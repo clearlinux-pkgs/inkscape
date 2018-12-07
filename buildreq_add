@@ -15,3 +15,5 @@ pango-dev
 cairo-dev
 aspell-dev
 potrace-dev
+gtkmm2-dev
+atkmm-dev
