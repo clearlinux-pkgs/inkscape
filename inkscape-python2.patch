@@ -1,0 +1,53 @@
+--- inkscape-0.92.3/share/filters/CMakeLists.txt
++++ inkscape-0.92.3/share/filters/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ add_custom_command(
+   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg.h
+-  COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg > ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg.h
++  COMMAND python2 ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg > ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg.h
+   MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py
+ )
+--- inkscape-0.92.3/share/palettes/CMakeLists.txt
++++ inkscape-0.92.3/share/palettes/CMakeLists.txt
+@@ -2,7 +2,7 @@ set(I18N_FILES "inkscape.gpl" "svg.gpl"
+ 
+ add_custom_command(
+   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/palettes.h
+-  COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${I18N_FILES} > ${CMAKE_CURRENT_SOURCE_DIR}/palettes.h
++  COMMAND python2 ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${I18N_FILES} > ${CMAKE_CURRENT_SOURCE_DIR}/palettes.h
+   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${I18N_FILES}
+ )
+--- inkscape-0.92.3/share/patterns/CMakeLists.txt
++++ inkscape-0.92.3/share/patterns/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ add_custom_command(
+   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/patterns.svg.h
+-  COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${CMAKE_CURRENT_SOURCE_DIR}/patterns.svg > ${CMAKE_CURRENT_SOURCE_DIR}/patterns.svg.h
++  COMMAND python2 ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${CMAKE_CURRENT_SOURCE_DIR}/patterns.svg > ${CMAKE_CURRENT_SOURCE_DIR}/patterns.svg.h
+   MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/patterns.svg
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py
+ )
+--- inkscape-0.92.3/share/symbols/CMakeLists.txt
++++ inkscape-0.92.3/share/symbols/CMakeLists.txt
+@@ -2,7 +2,7 @@ file(GLOB _FILES RELATIVE ${CMAKE_CURREN
+ 
+ add_custom_command(
+   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h
+-  COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES} > ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h
++  COMMAND python2 ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES} > ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h
+   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES}
+ )
+--- inkscape-0.92.3/share/templates/CMakeLists.txt
++++ inkscape-0.92.3/share/templates/CMakeLists.txt
+@@ -2,7 +2,7 @@ file(GLOB _FILES RELATIVE ${CMAKE_CURREN
+ 
+ add_custom_command(
+   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/templates.h
+-  COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES} > ${CMAKE_CURRENT_SOURCE_DIR}/templates.h
++  COMMAND python2 ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES} > ${CMAKE_CURRENT_SOURCE_DIR}/templates.h
+   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES}
+ )

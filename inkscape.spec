@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 0.92.3
-Release  : 1
+Release  : 2
 URL      : https://inkscape.org/en/gallery/item/12187/inkscape-0.92.3.tar.bz2
 Source0  : https://inkscape.org/en/gallery/item/12187/inkscape-0.92.3.tar.bz2
 Summary  : CxxTest Testing Framework for C++
@@ -75,6 +75,7 @@ BuildRequires : popt-dev
 BuildRequires : potrace-dev
 Patch1: inkscape-0.92.3-poppler-0.64.patch
 Patch2: inkscape-0.92.3-poppler-0.65.patch
+Patch3: inkscape-python2.patch
 
 %description
 CxxTest is a JUnit/CppUnit/xUnit-like framework for C++.
@@ -132,13 +133,14 @@ man components for the inkscape package.
 %setup -q -n inkscape-0.92.3
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1544222771
+export SOURCE_DATE_EPOCH=1544293014
 %autogen --disable-static --disable-poppler-cairo
 make  %{?_smp_mflags}
 
@@ -150,7 +152,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1544222771
+export SOURCE_DATE_EPOCH=1544293014
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/CMakeScripts_COPYING-CMAKE-SCRIPTS
