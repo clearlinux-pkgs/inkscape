@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 0.92.4
-Release  : 3
+Release  : 4
 URL      : https://media.inkscape.org/dl/resources/file/inkscape-0.92.4.tar.bz2
 Source0  : https://media.inkscape.org/dl/resources/file/inkscape-0.92.4.tar.bz2
 Summary  : CxxTest Testing Framework for C++
