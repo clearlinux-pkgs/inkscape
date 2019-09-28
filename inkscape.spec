@@ -4,10 +4,10 @@
 #
 Name     : inkscape
 Version  : 0.92.4
-Release  : 4
-URL      : https://media.inkscape.org/dl/resources/file/inkscape-0.92.4.tar.bz2
-Source0  : https://media.inkscape.org/dl/resources/file/inkscape-0.92.4.tar.bz2
-Summary  : CxxTest Testing Framework for C++
+Release  : 5
+URL      : https://gitlab.com/inkscape/inkscape/-/archive/INKSCAPE_0_92_4/inkscape-INKSCAPE_0_92_4.tar.bz2
+Source0  : https://gitlab.com/inkscape/inkscape/-/archive/INKSCAPE_0_92_4/inkscape-INKSCAPE_0_92_4.tar.bz2
+Summary  : Professional vector graphics editor
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 LGPL-2.1
 Requires: inkscape-bin = %{version}-%{release}
@@ -78,20 +78,18 @@ BuildRequires : potrace-dev
 Patch1: inkscape-python2.patch
 
 %description
-CxxTest is a JUnit/CppUnit/xUnit-like framework for C++.
-Its advantages over existing alternatives are that it:
- - Doesn't require RTTI
- - Doesn't require member template functions
- - Doesn't require exception handling
- - Doesn't require any external libraries (including memory management, 
-   file/console I/O, graphics libraries)
+Inkscape is professional quality vector graphics software which runs on
+Windows, Mac OS X and GNU/Linux. It is used by design professionals and
+hobbyists worldwide, for creating a wide variety of graphics such as
+illustrations, icons, logos, diagrams, maps and web graphics. Inkscape uses the
+W3C open standard SVG (Scalable Vector Graphics) as its native format, and is
+free and open-source software.
 
 %package bin
 Summary: bin components for the inkscape package.
 Group: Binaries
 Requires: inkscape-data = %{version}-%{release}
 Requires: inkscape-license = %{version}-%{release}
-Requires: inkscape-man = %{version}-%{release}
 
 %description bin
 bin components for the inkscape package.
@@ -130,27 +128,36 @@ man components for the inkscape package.
 
 
 %prep
-%setup -q -n inkscape-0.92.4
+%setup -q -n inkscape-INKSCAPE_0_92_4
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1548718757
-%autogen --disable-static --disable-poppler-cairo
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1569631158
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+%autogen --disable-static --disable-poppler-cairo \
+--disable-strict-build
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1548718757
+export SOURCE_DATE_EPOCH=1569631158
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/CMakeScripts_COPYING-CMAKE-SCRIPTS

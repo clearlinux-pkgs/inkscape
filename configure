@@ -1,1 +1,2 @@
 --disable-poppler-cairo
+--disable-strict-build
