@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 0.92.4
-Release  : 5
+Release  : 6
 URL      : https://gitlab.com/inkscape/inkscape/-/archive/INKSCAPE_0_92_4/inkscape-INKSCAPE_0_92_4.tar.bz2
 Source0  : https://gitlab.com/inkscape/inkscape/-/archive/INKSCAPE_0_92_4/inkscape-INKSCAPE_0_92_4.tar.bz2
 Summary  : Professional vector graphics editor
