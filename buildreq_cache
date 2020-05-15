@@ -1,2 +1,5 @@
-0.92.4
-lxml
+1.0
+pkgconfig(gsl)
+pkgconfig(poppler)
+pkgconfig(poppler-cairo)
+pkgconfig(poppler-glib)

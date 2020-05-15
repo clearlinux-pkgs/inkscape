@@ -1,14 +1,12 @@
 # This file contains pkgconfig build requirements that get picked up
 # but are undesirable. One entry per line, no whitespace.
+GraphicsMagick++
+ImageMagick++
 gnome-vfs-2.0
+gtk-mac-integration-gtk3
 lcms
 libcdr-0.0
 libvisio-0.0
 libwpd-0.9
-libwpd-0.9
 libwpd-stream-0.9
 libwpg-0.2
-ImageMagick++
-poppler
-poppler-cairo
-poppler-glib

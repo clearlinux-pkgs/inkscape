@@ -1,21 +1,22 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
+ImageMagick
 ImageMagick-dev
+aspell-dev
+atkmm-dev
+boost-dev
+buildreq-gnome
+cairo-dev
+dbus-dev
+double-conversion-dev
+glibmm-dev
+gtkmm2-dev
+gtkmm3-dev
 intltool
 intltool-dev
-gtkmm3-dev
-glibmm-dev
-libjpeg-turbo-dev
-buildreq-gnome
-boost-dev
-ImageMagick
 lcms2-dev
-popt-dev
-pango-dev
-cairo-dev
-aspell-dev
-potrace-dev
-gtkmm2-dev
-atkmm-dev
+libjpeg-turbo-dev
 libwpg-dev
-dbus-dev
+pango-dev
+popt-dev
+potrace-dev
