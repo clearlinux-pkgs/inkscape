@@ -1,14 +1,14 @@
-From 11678b0b6f530a657fb37d28b4cdd68292977eef Mon Sep 17 00:00:00 2001
+From 269c25e89ace511100772279e3ea2f4223f57021 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 18 May 2020 10:20:10 -0700
 Subject: [PATCH] DEBUG
 
 ---
- share/templates/create_default_templates.py | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ share/templates/create_default_templates.py | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/share/templates/create_default_templates.py b/share/templates/create_default_templates.py
-index adbfb80a4d9f..8a8a971dac2f 100755
+index adbfb80a4d9f..cdefc6d3a808 100755
 --- a/share/templates/create_default_templates.py
 +++ b/share/templates/create_default_templates.py
 @@ -35,12 +35,17 @@ languages = [os.path.splitext(language)[0] for language in languages]  # split e
@@ -29,7 +29,7 @@ index adbfb80a4d9f..8a8a971dac2f 100755
          os.makedirs(destination_dir)
      shutil.copy(source, destination)
  
-@@ -54,15 +59,22 @@ for language in languages:
+@@ -54,15 +59,23 @@ for language in languages:
      # now create localized version of English template file (if we have a translation)
      template_file = source_dir + '/share/templates/default.svg'
      output_file = binary_dir + '/share/templates/default.' + language + '.svg'
@@ -40,6 +40,7 @@ index adbfb80a4d9f..8a8a971dac2f 100755
 +        print("BTW: removing output_file: {}".format(output_file))
          os.remove(output_file)
      if translated_string != LAYER_STRING:
++        print("BTW: translated_string ({}) != LAYER_STRING ({})".format(translated_string, LAYER_STRING))
          with open(template_file, 'r', encoding='utf-8', newline='\n') as file:
 +            print("BTW: reading template_file: {}".format(template_file))
              filedata = file.read()
@@ -48,7 +49,7 @@ index adbfb80a4d9f..8a8a971dac2f 100755
 +            print("BTW: writing output_file: {}".format(output_file))
              file.write(filedata)
 +    else:
-+        print("BTW: translated_string ({}) != LAYER_STRING ({})".format(translated_string, LAYER_STRING))
++        print("BTW: translated_string ({}) == LAYER_STRING ({})".format(translated_string, LAYER_STRING))
  
  
  # create timestamp file (indicates last successful creation for build system)
