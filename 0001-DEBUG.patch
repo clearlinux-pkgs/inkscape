@@ -1,17 +1,17 @@
-From 269c25e89ace511100772279e3ea2f4223f57021 Mon Sep 17 00:00:00 2001
+From 0e76445583823b05dacf9c0b5a45c014c03dcaa2 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 18 May 2020 10:20:10 -0700
 Subject: [PATCH] DEBUG
 
 ---
- share/templates/create_default_templates.py | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ share/templates/create_default_templates.py | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/share/templates/create_default_templates.py b/share/templates/create_default_templates.py
-index adbfb80a4d9f..cdefc6d3a808 100755
+index adbfb80a4d9f..4e70ecc4b6c7 100755
 --- a/share/templates/create_default_templates.py
 +++ b/share/templates/create_default_templates.py
-@@ -35,12 +35,17 @@ languages = [os.path.splitext(language)[0] for language in languages]  # split e
+@@ -35,15 +35,22 @@ languages = [os.path.splitext(language)[0] for language in languages]  # split e
  
  # process each language sequentially
  for language in languages:
@@ -29,7 +29,12 @@ index adbfb80a4d9f..cdefc6d3a808 100755
          os.makedirs(destination_dir)
      shutil.copy(source, destination)
  
-@@ -54,15 +59,23 @@ for language in languages:
++# Do another loop so we make sure we've copied all the translations first
++for language in languages:
+     # get translation with help of gettext
+     translation = gettext.translation('inkscape', localedir=binary_dir + '/po/locale', languages=[language])
+     translated_string = translation.gettext(LAYER_STRING)
+@@ -54,15 +61,23 @@ for language in languages:
      # now create localized version of English template file (if we have a translation)
      template_file = source_dir + '/share/templates/default.svg'
      output_file = binary_dir + '/share/templates/default.' + language + '.svg'

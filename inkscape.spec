@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.0
-Release  : 10
+Release  : 11
 URL      : https://media.inkscape.org/dl/resources/file/inkscape-1.0.tar.xz
 Source0  : https://media.inkscape.org/dl/resources/file/inkscape-1.0.tar.xz
 Summary  : Professional vector graphics editor
@@ -137,7 +137,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1589838210
+export SOURCE_DATE_EPOCH=1589849270
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -154,7 +154,7 @@ make  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1589838210
+export SOURCE_DATE_EPOCH=1589849270
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp %{_builddir}/inkscape-1.0_2020-05-01_4035a4fb49/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987
