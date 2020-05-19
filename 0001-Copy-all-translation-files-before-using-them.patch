@@ -1,0 +1,25 @@
+From 4af8548031dd69bd5b7b6840ec0f9f67634d7730 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Mon, 18 May 2020 10:20:10 -0700
+Subject: [PATCH] Copy all translation files before using them
+
+---
+ share/templates/create_default_templates.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/share/templates/create_default_templates.py b/share/templates/create_default_templates.py
+index adbfb80a4d9f..11017c71fe90 100755
+--- a/share/templates/create_default_templates.py
++++ b/share/templates/create_default_templates.py
+@@ -44,6 +44,8 @@ for language in languages:
+         os.makedirs(destination_dir)
+     shutil.copy(source, destination)
+ 
++# do another loop to ensure we've copied all the translations before using them
++for language in languages:
+     # get translation with help of gettext
+     translation = gettext.translation('inkscape', localedir=binary_dir + '/po/locale', languages=[language])
+     translated_string = translation.gettext(LAYER_STRING)
+-- 
+2.26.2
+
