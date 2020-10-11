@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Sun, 11 Oct 2020 18:23:43 +0000
+Subject: [PATCH] Specify target dependency for default_templates
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ share/templates/CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/share/templates/CMakeLists.txt b/share/templates/CMakeLists.txt
+index 70665de..63f4de9 100644
+--- a/share/templates/CMakeLists.txt
++++ b/share/templates/CMakeLists.txt
+@@ -42,3 +42,6 @@ if(ENABLE_NLS)
+ else()
+   message(STATUS "Generation of localized default templates will be skipped (building without NLS)")
+ endif()
++
++# .gmo file creation must happen first
++add_dependencies(default_templates pofiles)

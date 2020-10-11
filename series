@@ -1,1 +1,2 @@
-0001-Copy-all-translation-files-before-using-them.patch
+0001-Fix-build-when-atomic-include-is-not-implied.patch
+0002-Specify-target-dependency-for-default_templates.patch

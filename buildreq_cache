@@ -1,4 +1,4 @@
-1.0
+1.0.1
 pkgconfig(gsl)
 pkgconfig(poppler)
 pkgconfig(poppler-cairo)

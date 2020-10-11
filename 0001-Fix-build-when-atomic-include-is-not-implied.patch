@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Marc Jeanmougin <marc@jeanmougin.fr>
+Date: Tue, 8 Sep 2020 23:14:25 +0200
+Subject: [PATCH] Fix build when atomic include is not implied
+
+Upstream-Status: Backport
+Reference: https://gitlab.com/inkscape/inkscape/-/merge_requests/2306
+---
+ src/ui/tool/node.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/ui/tool/node.cpp b/src/ui/tool/node.cpp
+index 0af766a..fc09ca9 100644
+--- a/src/ui/tool/node.cpp
++++ b/src/ui/tool/node.cpp
+@@ -7,6 +7,7 @@
+  * Released under GNU GPL v2+, read the file 'COPYING' for more information.
+  */
+ 
++#include <atomic>
+ #include <iostream>
+ #include <stdexcept>
+ #include <boost/utility.hpp>
