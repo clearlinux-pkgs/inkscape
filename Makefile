@@ -1,5 +1,5 @@
 PKG_NAME := inkscape
-URL = https://media.inkscape.org/dl/resources/file/inkscape-1.0.1.tar.xz
+URL = https://inkscape.org/gallery/item/23820/inkscape-1.0.2.tar.xz
 ARCHIVES = 
 
 include ../common/Makefile.common
