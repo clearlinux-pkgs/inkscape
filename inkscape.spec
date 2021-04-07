@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.0.2
-Release  : 17
+Release  : 18
 URL      : https://inkscape.org/gallery/item/23820/inkscape-1.0.2.tar.xz
 Source0  : https://inkscape.org/gallery/item/23820/inkscape-1.0.2.tar.xz
 Summary  : Professional vector graphics editor
@@ -66,7 +66,8 @@ BuildRequires : pyserial
 BuildRequires : pytest-runner
 BuildRequires : scour
 BuildRequires : zlib-dev
-Patch1: 0002-Specify-target-dependency-for-default_templates.patch
+Patch1: 0001-Specify-target-dependency-for-default_templates.patch
+Patch2: 0002-Fix-build-with-glib-2.67.3.patch
 
 %description
 Inkscape is professional quality vector graphics software which runs on
@@ -132,13 +133,14 @@ man components for the inkscape package.
 %setup -q -n inkscape-1.0.2_2021-01-15_e86c870879
 cd %{_builddir}/inkscape-1.0.2_2021-01-15_e86c870879
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1611002326
+export SOURCE_DATE_EPOCH=1617759525
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -155,7 +157,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1611002326
+export SOURCE_DATE_EPOCH=1617759525
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp %{_builddir}/inkscape-1.0.2_2021-01-15_e86c870879/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987
