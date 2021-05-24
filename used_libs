@@ -1,11 +1,12 @@
 libX11.so.6
-libaspell.so.15
 libatk-1.0.so.0
 libatkmm-1.6.so.1
+libboost_filesystem.so.1.74.0
 libc.so.6
 libcairo-gobject.so.2
 libcairo.so.2
 libcairomm-1.0.so.1
+libcdr-0.1.so.1
 libdbus-1.so.3
 libdbus-glib-1.so.2
 libdouble-conversion.so.3
@@ -17,7 +18,6 @@ libgcc_s.so.1
 libgdk-3.so.0
 libgdk_pixbuf-2.0.so.0
 libgdkmm-3.0.so.1
-libgdl-3.so.5
 libgio-2.0.so.0
 libgiomm-2.4.so.1
 libglib-2.0.so.0
@@ -27,9 +27,9 @@ libgobject-2.0.so.0
 libgomp.so.1
 libgsl.so.25
 libgslcblas.so.0
+libgspell-1.so.2
 libgtk-3.so.0
 libgtkmm-3.0.so.1
-libgtkspell3-3.so.0
 libharfbuzz.so.0
 libjpeg.so.62
 liblcms2.so.2
@@ -43,11 +43,14 @@ libpoppler-glib.so.8
 libpoppler.so.92
 libpotrace.so.0
 libpthread.so.0
+libreadline.so.8
 librevenge-0.0.so.0
 librevenge-stream-0.0.so.0
 libsigc-2.0.so.0
 libsoup-2.4.so.1
 libstdc++.so.6
+libtinfow.so.6
+libvisio-0.1.so.1
 libwpg-0.3.so.3
 libxml2.so.2
 libxslt.so.1

@@ -20,3 +20,4 @@ libwpg-dev
 pango-dev
 popt-dev
 potrace-dev
+Cython

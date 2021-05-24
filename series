@@ -1,2 +1,2 @@
 0001-Specify-target-dependency-for-default_templates.patch
-0002-Fix-build-with-glib-2.67.3.patch
+#0002-Fix-build-with-glib-2.67.3.patch
