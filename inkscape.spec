@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.1
-Release  : 20
+Release  : 21
 URL      : https://inkscape.org/gallery/item/26932/inkscape-1.1.tar.xz
 Source0  : https://inkscape.org/gallery/item/26932/inkscape-1.1.tar.xz
 Summary  : Professional vector graphics editor
@@ -66,7 +66,6 @@ BuildRequires : pkgconfig(libsoup-2.4)
 BuildRequires : pkgconfig(libvisio-0.1)
 BuildRequires : pkgconfig(libwpg-0.3)
 BuildRequires : pkgconfig(poppler)
-BuildRequires : pkgconfig(poppler-cairo)
 BuildRequires : pkgconfig(poppler-glib)
 BuildRequires : pkgconfig(readline)
 BuildRequires : popt-dev
