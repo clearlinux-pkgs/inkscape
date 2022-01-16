@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.1
-Release  : 23
+Release  : 24
 URL      : https://inkscape.org/gallery/item/26932/inkscape-1.1.tar.xz
 Source0  : https://inkscape.org/gallery/item/26932/inkscape-1.1.tar.xz
 Summary  : Professional vector graphics editor
@@ -16,10 +16,6 @@ Requires: inkscape-lib = %{version}-%{release}
 Requires: inkscape-license = %{version}-%{release}
 Requires: inkscape-locales = %{version}-%{release}
 Requires: inkscape-man = %{version}-%{release}
-Requires: numpy
-Requires: pyserial
-Requires: scour
-BuildRequires : Cython
 BuildRequires : ImageMagick
 BuildRequires : ImageMagick-dev
 BuildRequires : aspell-dev
@@ -47,7 +43,6 @@ BuildRequires : libpng-dev
 BuildRequires : libwpg-dev
 BuildRequires : libxml2-dev
 BuildRequires : libxslt-dev
-BuildRequires : numpy
 BuildRequires : pango-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(atomic_ops)
@@ -70,11 +65,13 @@ BuildRequires : pkgconfig(poppler-glib)
 BuildRequires : pkgconfig(readline)
 BuildRequires : popt-dev
 BuildRequires : potrace-dev
-BuildRequires : pyserial
-BuildRequires : pytest-runner
+BuildRequires : pypi(numpy)
+BuildRequires : pypi(pyserial)
+BuildRequires : pypi(pytest_runner)
+BuildRequires : pypi(scour)
+BuildRequires : pypi-cython
 BuildRequires : python3
 BuildRequires : python3-dev
-BuildRequires : scour
 BuildRequires : zlib-dev
 Patch1: 0001-Specify-target-dependency-for-default_templates.patch
 
@@ -161,27 +158,28 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1621871168
+export SOURCE_DATE_EPOCH=1642359816
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %cmake .. -DWITH_DBUS=ON \
 -DCMAKE_INSTALL_LIBDIR=lib64
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1621871168
+export SOURCE_DATE_EPOCH=1642359816
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987
+cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/COPYING %{buildroot}/usr/share/package-licenses/inkscape/1c23a1ebebad6967171ed9e84a4072f91e3f65c3
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/GPL-2.0.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9
@@ -191,10 +189,13 @@ cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/LGPL-2.1.txt %{build
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/LGPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/LGPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b
+cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e
+cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/share/doc/LICENSE %{buildroot}/usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/share/extensions/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/share/themes/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/src/3rdparty/2geom/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/src/3rdparty/2geom/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b
+cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/src/3rdparty/2geom/LICENSE.md %{buildroot}/usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/src/3rdparty/adaptagrams/libavoid/LICENSE.LGPL %{buildroot}/usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/src/3rdparty/adaptagrams/libvpsc/COPYING %{buildroot}/usr/share/package-licenses/inkscape/ed328ea8eb39f368373b8b02adfbb23db3f860ac
 cp %{_builddir}/inkscape-1.1_2021-05-24_c4e8f9ed74/testfiles/rendering_tests/fonts/LICENSES %{buildroot}/usr/share/package-licenses/inkscape/d7a08db444b06a236030a28b1ba914ffbc2cde33
@@ -3547,13 +3548,17 @@ popd
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/inkscape/1173a04f617603e4ca31baf10bdf64dd12ab6a97
+/usr/share/package-licenses/inkscape/1c23a1ebebad6967171ed9e84a4072f91e3f65c3
 /usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56
+/usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e
 /usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9
+/usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb
 /usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b
 /usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0
 /usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
 /usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 /usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05
+/usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f
 /usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b
 /usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b
 /usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f

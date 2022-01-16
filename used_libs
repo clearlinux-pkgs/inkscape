@@ -1,7 +1,7 @@
 libX11.so.6
 libatk-1.0.so.0
 libatkmm-1.6.so.1
-libboost_filesystem.so.1.74.0
+libboost_filesystem.so.1.77.0
 libc.so.6
 libcairo-gobject.so.2
 libcairo.so.2
@@ -40,9 +40,8 @@ libpangoft2-1.0.so.0
 libpangomm-1.4.so.1
 libpng16.so.16
 libpoppler-glib.so.8
-libpoppler.so.92
+libpoppler.so.112
 libpotrace.so.0
-libpthread.so.0
 libreadline.so.8
 librevenge-0.0.so.0
 librevenge-stream-0.0.so.0
