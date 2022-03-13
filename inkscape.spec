@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.1.2
-Release  : 27
+Release  : 28
 URL      : https://inkscape.org/gallery/item/31668/inkscape-1.1.2.tar.xz
 Source0  : https://inkscape.org/gallery/item/31668/inkscape-1.1.2.tar.xz
 Summary  : Professional vector graphics editor
@@ -74,7 +74,7 @@ BuildRequires : pypi-cython
 BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : zlib-dev
-Patch1: 0001-Specify-target-dependency-for-default_templates.patch
+Patch1: 0001-CMake-add-dependency-on-pofiles-for-default_template.patch
 
 %description
 Inkscape is professional quality vector graphics software which runs on
@@ -169,7 +169,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1644256153
+export SOURCE_DATE_EPOCH=1647130698
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -222,7 +222,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1644256153
+export SOURCE_DATE_EPOCH=1647130698
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp %{_builddir}/inkscape-1.1.2_2022-02-04_0a00cf5339/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987
