@@ -7,8 +7,6 @@ libcairo-gobject.so.2
 libcairo.so.2
 libcairomm-1.0.so.1
 libcdr-0.1.so.1
-libdbus-1.so.3
-libdbus-glib-1.so.2
 libdouble-conversion.so.3
 libenchant-2.so.2
 libfontconfig.so.1
@@ -40,7 +38,7 @@ libpangoft2-1.0.so.0
 libpangomm-1.4.so.1
 libpng16.so.16
 libpoppler-glib.so.8
-libpoppler.so.117
+libpoppler.so.122
 libpotrace.so.0
 libreadline.so.8
 librevenge-0.0.so.0
