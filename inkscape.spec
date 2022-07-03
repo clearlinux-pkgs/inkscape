@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.2
-Release  : 30
+Release  : 31
 URL      : https://inkscape.org/gallery/item/33449/inkscape-1.2.tar.xz
 Source0  : https://inkscape.org/gallery/item/33449/inkscape-1.2.tar.xz
 Summary  : Professional vector graphics editor
@@ -3877,6 +3877,7 @@ popd
 /usr/lib64/glibc-hwcaps/x86-64-v4/lib2geom.so.1.1.0
 /usr/lib64/inkscape/libinkscape_base.so
 /usr/lib64/lib2geom.so.1.1.0
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
