@@ -13,3 +13,4 @@ libwpg-0.2
 2geom
 GLOBAL
 poppler-cairo
+"gtk+-2.0"
