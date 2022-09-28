@@ -1,1 +1,2 @@
 0001-CMake-add-dependency-on-pofiles-for-default_template.patch
+backport-Fix-build-with-Poppler-22.09.0.patch

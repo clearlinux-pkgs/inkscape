@@ -1,4 +1,4 @@
-From 2205901d0e54825d5b470912928a650990dcd6c9 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Patrick McCarty <patrick.mccarty@intel.com>
 Date: Tue, 1 Mar 2022 16:57:22 -0800
 Subject: [PATCH] CMake: add dependency on pofiles for default_templates
