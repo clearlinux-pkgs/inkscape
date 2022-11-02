@@ -4,7 +4,7 @@
 #
 Name     : inkscape
 Version  : 1.2.1
-Release  : 49
+Release  : 50
 URL      : https://inkscape.org/gallery/item/34673/inkscape-1.2.1.tar.xz
 Source0  : https://inkscape.org/gallery/item/34673/inkscape-1.2.1.tar.xz
 Summary  : Professional vector graphics editor
@@ -174,7 +174,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1664323535
+export SOURCE_DATE_EPOCH=1667429760
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -219,13 +219,13 @@ export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mtune=skylake "
-export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mtune=skylake "
-export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mtune=skylake "
-export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mtune=skylake "
-export CFLAGS="$CFLAGS -march=x86-64-v4 -m64 -Wl,-z,x86-64-v4 "
-export CXXFLAGS="$CXXFLAGS -march=x86-64-v4 -m64 -Wl,-z,x86-64-v4 "
-export FFLAGS="$FFLAGS -march=x86-64-v4 -m64 -Wl,-z,x86-64-v4 "
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mprefer-vector-width=512 -mtune=sapphirerapids "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mprefer-vector-width=512 -mtune=sapphirerapids "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mprefer-vector-width=512 -mtune=sapphirerapids "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v4 -ffat-lto-objects -flto=auto -march=x86_64-v4 -mprefer-vector-width=512 -mtune=sapphirerapids "
+export CFLAGS="$CFLAGS -march=x86-64-v4 -m64 -Wl,-z,x86-64-v4 -mprefer-vector-width=512"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v4 -m64 -Wl,-z,x86-64-v4 -mprefer-vector-width=512"
+export FFLAGS="$FFLAGS -march=x86-64-v4 -m64 -Wl,-z,x86-64-v4 -mprefer-vector-width=512"
 export FCFLAGS="$FCFLAGS -march=x86-64-v4 -m64 "
 %cmake .. -DWITH_DBUS=ON \
 -DCMAKE_INSTALL_LIBDIR=lib64
@@ -233,40 +233,40 @@ make  %{?_smp_mflags}  -O
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1664323535
+export SOURCE_DATE_EPOCH=1667429760
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/COPYING %{buildroot}/usr/share/package-licenses/inkscape/e9982175c2726ba1063e41ec2fad9c5e1e2f60c1
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-2.0.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-2.1-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/1173a04f617603e4ca31baf10bdf64dd12ab6a97
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-2.1.txt %{buildroot}/usr/share/package-licenses/inkscape/ec9647c584b2643c86beef5d4888c1ba66784d57
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/doc/LICENSE %{buildroot}/usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/extensions/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/extensions/other/clipart/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/extensions/other/gcodetools/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/themes/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/2geom/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/2geom/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/2geom/LICENSE.md %{buildroot}/usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/adaptagrams/libavoid/LICENSE.LGPL %{buildroot}/usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/adaptagrams/libvpsc/COPYING %{buildroot}/usr/share/package-licenses/inkscape/ed328ea8eb39f368373b8b02adfbb23db3f860ac
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/8088b44375ef05202c0fca4e9e82d47591563609
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/perf/COPYING %{buildroot}/usr/share/package-licenses/inkscape/2cc384b53d50baa25a960aa83b0ac0edca682fa7
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/test/COPYING %{buildroot}/usr/share/package-licenses/inkscape/a4233e56493311ffd59845410b6e156f03b07335
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/test/pdiff/gpl.txt %{buildroot}/usr/share/package-licenses/inkscape/9a13113b89f7985efe22a28b8e4ad1ace7f2b5d1
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/util/cairo-script/COPYING %{buildroot}/usr/share/package-licenses/inkscape/d888f729a340181e37b0b2fb25c2942d5005e6a2
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/util/cairo-trace/COPYING %{buildroot}/usr/share/package-licenses/inkscape/0315f8fa18770a489890f8448111722aca24b8ec
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/util/cairo-trace/COPYING-GPL-3 %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02
-cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/testfiles/rendering_tests/fonts/LICENSES %{buildroot}/usr/share/package-licenses/inkscape/d7a08db444b06a236030a28b1ba914ffbc2cde33
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/COPYING %{buildroot}/usr/share/package-licenses/inkscape/e9982175c2726ba1063e41ec2fad9c5e1e2f60c1 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-2.0.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/GPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-2.1-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/1173a04f617603e4ca31baf10bdf64dd12ab6a97 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-2.1.txt %{buildroot}/usr/share/package-licenses/inkscape/ec9647c584b2643c86beef5d4888c1ba66784d57 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/LGPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/doc/LICENSE %{buildroot}/usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/extensions/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/extensions/other/clipart/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/extensions/other/gcodetools/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/share/themes/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/2geom/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/2geom/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/2geom/LICENSE.md %{buildroot}/usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/adaptagrams/libavoid/LICENSE.LGPL %{buildroot}/usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/adaptagrams/libvpsc/COPYING %{buildroot}/usr/share/package-licenses/inkscape/ed328ea8eb39f368373b8b02adfbb23db3f860ac || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/8088b44375ef05202c0fca4e9e82d47591563609 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/perf/COPYING %{buildroot}/usr/share/package-licenses/inkscape/2cc384b53d50baa25a960aa83b0ac0edca682fa7 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/test/COPYING %{buildroot}/usr/share/package-licenses/inkscape/a4233e56493311ffd59845410b6e156f03b07335 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/test/pdiff/gpl.txt %{buildroot}/usr/share/package-licenses/inkscape/9a13113b89f7985efe22a28b8e4ad1ace7f2b5d1 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/util/cairo-script/COPYING %{buildroot}/usr/share/package-licenses/inkscape/d888f729a340181e37b0b2fb25c2942d5005e6a2 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/util/cairo-trace/COPYING %{buildroot}/usr/share/package-licenses/inkscape/0315f8fa18770a489890f8448111722aca24b8ec || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/src/3rdparty/cairo/util/cairo-trace/COPYING-GPL-3 %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2022-07-14_9c6d41e410/testfiles/rendering_tests/fonts/LICENSES %{buildroot}/usr/share/package-licenses/inkscape/d7a08db444b06a236030a28b1ba914ffbc2cde33 || :
 pushd clr-build-avx2
 %make_install_v3  || :
 popd
