@@ -5,7 +5,7 @@
 #
 Name     : inkscape
 Version  : 1.2.2
-Release  : 66
+Release  : 67
 URL      : https://inkscape.org/gallery/item/37360/inkscape-1.2.2.tar.xz
 Source0  : https://inkscape.org/gallery/item/37360/inkscape-1.2.2.tar.xz
 Summary  : Professional vector graphics editor
@@ -155,11 +155,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-<<<<<<< Updated upstream
-export SOURCE_DATE_EPOCH=1682987228
-=======
-export SOURCE_DATE_EPOCH=1680551473
->>>>>>> Stashed changes
+export SOURCE_DATE_EPOCH=1683261308
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -218,11 +214,7 @@ make  %{?_smp_mflags}  -O
 popd
 
 %install
-<<<<<<< Updated upstream
-export SOURCE_DATE_EPOCH=1682987228
-=======
-export SOURCE_DATE_EPOCH=1680551473
->>>>>>> Stashed changes
+export SOURCE_DATE_EPOCH=1683261308
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987 || :
