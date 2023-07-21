@@ -4,13 +4,13 @@
 # Using build pattern: cmake
 #
 Name     : inkscape
-Version  : 1.2.2
-Release  : 74
-URL      : https://inkscape.org/gallery/item/37360/inkscape-1.2.2.tar.xz
-Source0  : https://inkscape.org/gallery/item/37360/inkscape-1.2.2.tar.xz
+Version  : 1.3
+Release  : 75
+URL      : https://inkscape.org/gallery/item/42328/inkscape-1.3.tar.xz
+Source0  : https://inkscape.org/gallery/item/42328/inkscape-1.3.tar.xz
 Summary  : Professional vector graphics editor
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MPL-1.1 OFL-1.1
+License  : BSD-3-Clause GPL-2.0 GPL-3.0 LGPL-2.0 LGPL-2.1 LGPL-3.0 MIT MPL-1.1 OFL-1.1
 Requires: inkscape-bin = %{version}-%{release}
 Requires: inkscape-data = %{version}-%{release}
 Requires: inkscape-lib = %{version}-%{release}
@@ -48,16 +48,19 @@ BuildRequires : pkg-config
 BuildRequires : pkgconfig(atomic_ops)
 BuildRequires : pkgconfig(bdw-gc)
 BuildRequires : pkgconfig(cairo)
+BuildRequires : pkgconfig(epoxy)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(gsl)
 BuildRequires : pkgconfig(gspell-1)
 BuildRequires : pkgconfig(gtk+-3.0)
+BuildRequires : pkgconfig(gtksourceview-4)
 BuildRequires : pkgconfig(libcdr-0.1)
 BuildRequires : pkgconfig(librevenge-0.0)
 BuildRequires : pkgconfig(librevenge-stream-0.0)
 BuildRequires : pkgconfig(libsoup-2.4)
 BuildRequires : pkgconfig(libvisio-0.1)
 BuildRequires : pkgconfig(libwpg-0.3)
+BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : pkgconfig(poppler)
 BuildRequires : pkgconfig(poppler-glib)
 BuildRequires : pkgconfig(readline)
@@ -67,7 +70,6 @@ BuildRequires : pypi-cython
 BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : zlib-dev
-Patch1: 0001-CMake-add-dependency-on-pofiles-for-default_template.patch
 
 %description
 Inkscape is professional quality vector graphics software which runs on
@@ -143,9 +145,8 @@ man components for the inkscape package.
 
 
 %prep
-%setup -q -n inkscape-1.2.2_2022-12-01_b0a8486541
-cd %{_builddir}/inkscape-1.2.2_2022-12-01_b0a8486541
-%patch -P 1 -p1
+%setup -q -n inkscape-1.3_2023-07-21_0e150ed6c4
+cd %{_builddir}/inkscape-1.3_2023-07-21_0e150ed6c4
 
 %build
 ## build_prepend content
@@ -155,7 +156,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1689832117
+export SOURCE_DATE_EPOCH=1689977545
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -214,32 +215,44 @@ make  %{?_smp_mflags}  -O
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1689832117
+export SOURCE_DATE_EPOCH=1689977545
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/COPYING %{buildroot}/usr/share/package-licenses/inkscape/e9982175c2726ba1063e41ec2fad9c5e1e2f60c1 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/GPL-2.0.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/GPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/LGPL-2.1-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/1173a04f617603e4ca31baf10bdf64dd12ab6a97 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/LGPL-2.1.txt %{buildroot}/usr/share/package-licenses/inkscape/ec9647c584b2643c86beef5d4888c1ba66784d57 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/LGPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/LGPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/share/doc/LICENSE %{buildroot}/usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/share/extensions/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/share/extensions/other/clipart/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/share/extensions/other/gcodetools/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/share/themes/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/src/3rdparty/2geom/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/src/3rdparty/2geom/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/src/3rdparty/2geom/LICENSE.md %{buildroot}/usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/src/3rdparty/adaptagrams/libavoid/LICENSE.LGPL %{buildroot}/usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05 || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/src/3rdparty/adaptagrams/libvpsc/COPYING %{buildroot}/usr/share/package-licenses/inkscape/ed328ea8eb39f368373b8b02adfbb23db3f860ac || :
-cp %{_builddir}/inkscape-%{version}_2022-12-01_b0a8486541/testfiles/rendering_tests/fonts/LICENSES %{buildroot}/usr/share/package-licenses/inkscape/d7a08db444b06a236030a28b1ba914ffbc2cde33 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/COPYING %{buildroot}/usr/share/package-licenses/inkscape/e9982175c2726ba1063e41ec2fad9c5e1e2f60c1 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/GPL-2.0.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/GPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/GPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/LGPL-2.1-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/1173a04f617603e4ca31baf10bdf64dd12ab6a97 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/LGPL-2.1.txt %{buildroot}/usr/share/package-licenses/inkscape/ec9647c584b2643c86beef5d4888c1ba66784d57 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/LGPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/LGPL-3.0.txt %{buildroot}/usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/MPL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/LICENSES/OFL-1.1.txt %{buildroot}/usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/doc/LICENSE %{buildroot}/usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/extensions/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/extensions/other/clipart/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/extensions/other/extension-xaml/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/extensions/other/gcodetools/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/extensions/other/inkman/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/share/themes/LICENSE.txt %{buildroot}/usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/2geom/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/2geom/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/2geom/LICENSE.md %{buildroot}/usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/adaptagrams/libavoid/LICENSE.LGPL %{buildroot}/usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/adaptagrams/libvpsc/COPYING %{buildroot}/usr/share/package-licenses/inkscape/ed328ea8eb39f368373b8b02adfbb23db3f860ac || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/inkscape/8088b44375ef05202c0fca4e9e82d47591563609 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/perf/COPYING %{buildroot}/usr/share/package-licenses/inkscape/2cc384b53d50baa25a960aa83b0ac0edca682fa7 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/test/COPYING %{buildroot}/usr/share/package-licenses/inkscape/a4233e56493311ffd59845410b6e156f03b07335 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/test/pdiff/gpl.txt %{buildroot}/usr/share/package-licenses/inkscape/9a13113b89f7985efe22a28b8e4ad1ace7f2b5d1 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/util/cairo-script/COPYING %{buildroot}/usr/share/package-licenses/inkscape/d888f729a340181e37b0b2fb25c2942d5005e6a2 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/util/cairo-trace/COPYING %{buildroot}/usr/share/package-licenses/inkscape/0315f8fa18770a489890f8448111722aca24b8ec || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/cairo/util/cairo-trace/COPYING-GPL-3 %{buildroot}/usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/libcroco/COPYING %{buildroot}/usr/share/package-licenses/inkscape/5fb362ef1680e635fe5fb212b55eef4db9ead48f || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/src/3rdparty/libcroco/COPYING.LIB %{buildroot}/usr/share/package-licenses/inkscape/5fb362ef1680e635fe5fb212b55eef4db9ead48f || :
+cp %{_builddir}/inkscape-%{version}_2023-07-21_0e150ed6c4/testfiles/rendering_tests/fonts/LICENSES %{buildroot}/usr/share/package-licenses/inkscape/d7a08db444b06a236030a28b1ba914ffbc2cde33 || :
 pushd clr-build-avx2
 %make_install_v3  || :
 popd
@@ -502,12 +515,16 @@ popd
 /usr/share/inkscape/extensions/color_rgbbarrel.inx
 /usr/share/inkscape/extensions/color_rgbbarrel.py
 /usr/share/inkscape/extensions/colors.xml
+/usr/share/inkscape/extensions/construct_from_triangle.inx
+/usr/share/inkscape/extensions/construct_from_triangle.py
 /usr/share/inkscape/extensions/convert2dashes.inx
 /usr/share/inkscape/extensions/convert2dashes.py
 /usr/share/inkscape/extensions/dhw_input.inx
 /usr/share/inkscape/extensions/dhw_input.py
 /usr/share/inkscape/extensions/dimension.inx
 /usr/share/inkscape/extensions/dimension.py
+/usr/share/inkscape/extensions/distribute_along_path.inx
+/usr/share/inkscape/extensions/distribute_along_path.py
 /usr/share/inkscape/extensions/doc_ai_convert.inx
 /usr/share/inkscape/extensions/doc_ai_convert.py
 /usr/share/inkscape/extensions/docinfo.inx
@@ -542,10 +559,14 @@ popd
 /usr/share/inkscape/extensions/docs/conf.py
 /usr/share/inkscape/extensions/docs/dev/getting-started.rst
 /usr/share/inkscape/extensions/docs/dev/index.rst
+/usr/share/inkscape/extensions/docs/extensions/index.rst
+/usr/share/inkscape/extensions/docs/extensions/svg2xaml.rst
 /usr/share/inkscape/extensions/docs/favicon.svg
 /usr/share/inkscape/extensions/docs/index.rst
 /usr/share/inkscape/extensions/docs/make.bat
+/usr/share/inkscape/extensions/docs/poetry-parse.py
 /usr/share/inkscape/extensions/docs/source/index.rst
+/usr/share/inkscape/extensions/docs/tutorial/creating-objects.rst
 /usr/share/inkscape/extensions/docs/tutorial/index.rst
 /usr/share/inkscape/extensions/docs/tutorial/my-first-effect-extension.rst
 /usr/share/inkscape/extensions/docs/tutorial/my-first-import-extension.rst
@@ -565,8 +586,6 @@ popd
 /usr/share/inkscape/extensions/dpi90to96.inx
 /usr/share/inkscape/extensions/dpi96to90.inx
 /usr/share/inkscape/extensions/dpiswitcher.py
-/usr/share/inkscape/extensions/draw_from_triangle.inx
-/usr/share/inkscape/extensions/draw_from_triangle.py
 /usr/share/inkscape/extensions/dxf12_outlines.inx
 /usr/share/inkscape/extensions/dxf12_outlines.py
 /usr/share/inkscape/extensions/dxf14_footer.txt
@@ -577,8 +596,6 @@ popd
 /usr/share/inkscape/extensions/dxf_input_text_scale_factor.svg
 /usr/share/inkscape/extensions/dxf_outlines.inx
 /usr/share/inkscape/extensions/dxf_outlines.py
-/usr/share/inkscape/extensions/edge3d.inx
-/usr/share/inkscape/extensions/edge3d.py
 /usr/share/inkscape/extensions/eps_input.inx
 /usr/share/inkscape/extensions/export_gimp_palette.inx
 /usr/share/inkscape/extensions/export_gimp_palette.py
@@ -597,9 +614,6 @@ popd
 /usr/share/inkscape/extensions/frame.py
 /usr/share/inkscape/extensions/funcplot.inx
 /usr/share/inkscape/extensions/funcplot.py
-/usr/share/inkscape/extensions/generate_voronoi.inx
-/usr/share/inkscape/extensions/generate_voronoi.py
-/usr/share/inkscape/extensions/genpofiles.sh
 /usr/share/inkscape/extensions/gimp_xcf.inx
 /usr/share/inkscape/extensions/gimp_xcf.py
 /usr/share/inkscape/extensions/grid_cartesian.inx
@@ -616,12 +630,16 @@ popd
 /usr/share/inkscape/extensions/handles.py
 /usr/share/inkscape/extensions/hershey.inx
 /usr/share/inkscape/extensions/hershey.py
-/usr/share/inkscape/extensions/hpgl_decoder.py
+/usr/share/inkscape/extensions/hpgl2_input.py
 /usr/share/inkscape/extensions/hpgl_encoder.py
 /usr/share/inkscape/extensions/hpgl_input.inx
-/usr/share/inkscape/extensions/hpgl_input.py
+/usr/share/inkscape/extensions/hpgl_input_sm.py
 /usr/share/inkscape/extensions/hpgl_output.inx
 /usr/share/inkscape/extensions/hpgl_output.py
+/usr/share/inkscape/extensions/hpgl_parser.py
+/usr/share/inkscape/extensions/icons/businesscard_landscape.svg
+/usr/share/inkscape/extensions/icons/dvd_box.svg
+/usr/share/inkscape/extensions/icons/seamless_pattern.svg
 /usr/share/inkscape/extensions/image_attributes.inx
 /usr/share/inkscape/extensions/image_attributes.py
 /usr/share/inkscape/extensions/image_embed.inx
@@ -687,9 +705,12 @@ popd
 /usr/share/inkscape/extensions/inkex/tester/__init__.py
 /usr/share/inkscape/extensions/inkex/tester/decorators.py
 /usr/share/inkscape/extensions/inkex/tester/filters.py
+/usr/share/inkscape/extensions/inkex/tester/inkscape.extension.rng
+/usr/share/inkscape/extensions/inkex/tester/inkscape.extension.schema
 /usr/share/inkscape/extensions/inkex/tester/inx.py
 /usr/share/inkscape/extensions/inkex/tester/mock.py
 /usr/share/inkscape/extensions/inkex/tester/svg.py
+/usr/share/inkscape/extensions/inkex/tester/test_inx_file.py
 /usr/share/inkscape/extensions/inkex/tester/word.py
 /usr/share/inkscape/extensions/inkex/tester/xmldiff.py
 /usr/share/inkscape/extensions/inkex/transforms.py
@@ -697,7 +718,7 @@ popd
 /usr/share/inkscape/extensions/inkex/tween.py
 /usr/share/inkscape/extensions/inkex/units.py
 /usr/share/inkscape/extensions/inkex/utils.py
-/usr/share/inkscape/extensions/inkman/inkman/.git
+/usr/share/inkscape/extensions/inkman/inkman/LICENSE.txt
 /usr/share/inkscape/extensions/inkman/inkman/inkman/__init__.py
 /usr/share/inkscape/extensions/inkman/inkman/inkman/archive.py
 /usr/share/inkscape/extensions/inkman/inkman/inkman/backfoot.py
@@ -729,12 +750,12 @@ popd
 /usr/share/inkscape/extensions/inkman/inkman/manage_extensions.inx
 /usr/share/inkscape/extensions/inkman/inkman/manage_extensions.py
 /usr/share/inkscape/extensions/inkman/inkman/pyproject.toml
-/usr/share/inkscape/extensions/inkscape.extension.rng
-/usr/share/inkscape/extensions/inkscape.extension.schema
 /usr/share/inkscape/extensions/inkscape_follow_link.inx
 /usr/share/inkscape/extensions/inkscape_follow_link.py
 /usr/share/inkscape/extensions/inkweb.js
 /usr/share/inkscape/extensions/inkwebeffect.py
+/usr/share/inkscape/extensions/inset_shadow.inx
+/usr/share/inkscape/extensions/inset_shadow.py
 /usr/share/inkscape/extensions/interp.inx
 /usr/share/inkscape/extensions/interp.py
 /usr/share/inkscape/extensions/interp_att_g.inx
@@ -777,6 +798,8 @@ popd
 /usr/share/inkscape/extensions/layout_nup.py
 /usr/share/inkscape/extensions/lindenmayer.inx
 /usr/share/inkscape/extensions/lindenmayer.py
+/usr/share/inkscape/extensions/long_shadow.inx
+/usr/share/inkscape/extensions/long_shadow.py
 /usr/share/inkscape/extensions/lorem_ipsum.inx
 /usr/share/inkscape/extensions/lorem_ipsum.py
 /usr/share/inkscape/extensions/markers_strokepaint.inx
@@ -787,8 +810,6 @@ popd
 /usr/share/inkscape/extensions/media_zip.py
 /usr/share/inkscape/extensions/merge_styles.inx
 /usr/share/inkscape/extensions/merge_styles.py
-/usr/share/inkscape/extensions/motion.inx
-/usr/share/inkscape/extensions/motion.py
 /usr/share/inkscape/extensions/new_glyph_layer.inx
 /usr/share/inkscape/extensions/new_glyph_layer.py
 /usr/share/inkscape/extensions/next_glyph_layer.inx
@@ -834,12 +855,39 @@ popd
 /usr/share/inkscape/extensions/other/clipart/sources/reactome.svg
 /usr/share/inkscape/extensions/other/clipart/sources/wikimedia.py
 /usr/share/inkscape/extensions/other/clipart/sources/wikimedia.svg
+/usr/share/inkscape/extensions/other/extension-xaml/.darglint
+/usr/share/inkscape/extensions/other/extension-xaml/.pre-commit-config.yaml
+/usr/share/inkscape/extensions/other/extension-xaml/.pylintrc
+/usr/share/inkscape/extensions/other/extension-xaml/LICENSE.txt
+/usr/share/inkscape/extensions/other/extension-xaml/docs/svg2xaml.rst
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/__init__.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/__init__.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/base.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/config.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/shapes.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/structural.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/text.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/export/utils.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/svg2xaml.inx
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/svg2xaml.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/tester.py
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg.inx
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/animation.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/brushes.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/canvas.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/geometry.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/properties.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/shapes.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xaml2svg/transform.xsl
+/usr/share/inkscape/extensions/other/extension-xaml/inkxaml/xamlobjects.py
+/usr/share/inkscape/extensions/other/extension-xaml/readme.md
+/usr/share/inkscape/extensions/other/extension-xaml/tox.ini
 /usr/share/inkscape/extensions/other/gcodetools/.darglint
 /usr/share/inkscape/extensions/other/gcodetools/.pylintrc
 /usr/share/inkscape/extensions/other/gcodetools/LICENSE.txt
 /usr/share/inkscape/extensions/other/gcodetools/MANIFEST.in
 /usr/share/inkscape/extensions/other/gcodetools/README.md
-/usr/share/inkscape/extensions/other/gcodetools/TESTING.md
 /usr/share/inkscape/extensions/other/gcodetools/gcodetools.py
 /usr/share/inkscape/extensions/other/gcodetools/gcodetools_about.inx
 /usr/share/inkscape/extensions/other/gcodetools/gcodetools_area.inx
@@ -851,12 +899,49 @@ popd
 /usr/share/inkscape/extensions/other/gcodetools/gcodetools_path_to_gcode.inx
 /usr/share/inkscape/extensions/other/gcodetools/gcodetools_prepare_path_for_plasma.inx
 /usr/share/inkscape/extensions/other/gcodetools/gcodetools_tools_library.inx
-/usr/share/inkscape/extensions/other/gcodetools/genpofiles.sh
 /usr/share/inkscape/extensions/other/gcodetools/setup.cfg
 /usr/share/inkscape/extensions/other/gcodetools/tox.ini
+/usr/share/inkscape/extensions/other/templates/icons/celticf.svg
+/usr/share/inkscape/extensions/other/templates/icons/celtick.svg
+/usr/share/inkscape/extensions/other/templates/icons/cross.svg
+/usr/share/inkscape/extensions/other/templates/icons/crown.svg
+/usr/share/inkscape/extensions/other/templates/icons/diamond.svg
+/usr/share/inkscape/extensions/other/templates/icons/droplet.svg
+/usr/share/inkscape/extensions/other/templates/icons/dtarget.svg
+/usr/share/inkscape/extensions/other/templates/icons/dvision.svg
+/usr/share/inkscape/extensions/other/templates/icons/explosion.svg
+/usr/share/inkscape/extensions/other/templates/icons/hive.svg
+/usr/share/inkscape/extensions/other/templates/icons/ktile.svg
+/usr/share/inkscape/extensions/other/templates/icons/lily.svg
+/usr/share/inkscape/extensions/other/templates/icons/rose.svg
+/usr/share/inkscape/extensions/other/templates/icons/target.svg
+/usr/share/inkscape/extensions/other/templates/icons/trellis.svg
+/usr/share/inkscape/extensions/other/templates/icons/tv.svg
+/usr/share/inkscape/extensions/other/templates/icons/unknown.svg
+/usr/share/inkscape/extensions/other/templates/icons/vcross.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_01_trellis.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_02_diamond.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_03_cross.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_04_very_cross.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_05_target.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_06_hive.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_07_double_vision.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_08_celtic_flower.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_09_kitchen_tile.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_10_rose.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_11_diamond_target.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_12_tv_test_pattern.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_13_lily.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_14_explosion.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_15_crown.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_16_celtic_knot.svg
+/usr/share/inkscape/extensions/other/templates/shape_prefab_17_droplet.svg
+/usr/share/inkscape/extensions/other/templates/template_shape_prefab.inx
+/usr/share/inkscape/extensions/other/templates/template_shape_prefab.py
 /usr/share/inkscape/extensions/output_scour.inx
 /usr/share/inkscape/extensions/output_scour.py
 /usr/share/inkscape/extensions/output_scour.svg
+/usr/share/inkscape/extensions/package-readme.md
 /usr/share/inkscape/extensions/param_curves.inx
 /usr/share/inkscape/extensions/param_curves.py
 /usr/share/inkscape/extensions/path_envelope.inx
@@ -869,11 +954,9 @@ popd
 /usr/share/inkscape/extensions/path_number_nodes.py
 /usr/share/inkscape/extensions/path_to_absolute.inx
 /usr/share/inkscape/extensions/path_to_absolute.py
-/usr/share/inkscape/extensions/pathalongpath.inx
-/usr/share/inkscape/extensions/pathalongpath.py
 /usr/share/inkscape/extensions/pathmodifier.py
-/usr/share/inkscape/extensions/pathscatter.inx
-/usr/share/inkscape/extensions/pathscatter.py
+/usr/share/inkscape/extensions/patternalongpath.inx
+/usr/share/inkscape/extensions/patternalongpath.py
 /usr/share/inkscape/extensions/pdflatex.inx
 /usr/share/inkscape/extensions/pdflatex.py
 /usr/share/inkscape/extensions/perfectboundcover.inx
@@ -887,8 +970,6 @@ popd
 /usr/share/inkscape/extensions/poetry.lock
 /usr/share/inkscape/extensions/polyhedron_3d.inx
 /usr/share/inkscape/extensions/polyhedron_3d.py
-/usr/share/inkscape/extensions/prepare_file_save_as.inx
-/usr/share/inkscape/extensions/prepare_file_save_as.py
 /usr/share/inkscape/extensions/previous_glyph_layer.inx
 /usr/share/inkscape/extensions/previous_glyph_layer.py
 /usr/share/inkscape/extensions/printing_marks.inx
@@ -937,8 +1018,6 @@ popd
 /usr/share/inkscape/extensions/straightseg.py
 /usr/share/inkscape/extensions/svg2fxg.inx
 /usr/share/inkscape/extensions/svg2fxg.xsl
-/usr/share/inkscape/extensions/svg2xaml.inx
-/usr/share/inkscape/extensions/svg2xaml.xsl
 /usr/share/inkscape/extensions/svg_fonts/EMSAllure.svg
 /usr/share/inkscape/extensions/svg_fonts/EMSElfin.svg
 /usr/share/inkscape/extensions/svg_fonts/EMSFelix.svg
@@ -970,16 +1049,10 @@ popd
 /usr/share/inkscape/extensions/tar_layers.py
 /usr/share/inkscape/extensions/template.py
 /usr/share/inkscape/extensions/template_business_card.inx
-/usr/share/inkscape/extensions/template_desktop.inx
 /usr/share/inkscape/extensions/template_dvd_cover.inx
 /usr/share/inkscape/extensions/template_dvd_cover.py
-/usr/share/inkscape/extensions/template_envelope.inx
-/usr/share/inkscape/extensions/template_generic.inx
-/usr/share/inkscape/extensions/template_icon.inx
-/usr/share/inkscape/extensions/template_page.inx
 /usr/share/inkscape/extensions/template_seamless_pattern.inx
 /usr/share/inkscape/extensions/template_seamless_pattern.py
-/usr/share/inkscape/extensions/template_video.inx
 /usr/share/inkscape/extensions/text_braille.inx
 /usr/share/inkscape/extensions/text_braille.py
 /usr/share/inkscape/extensions/text_extract.inx
@@ -1004,11 +1077,15 @@ popd
 /usr/share/inkscape/extensions/tox.ini
 /usr/share/inkscape/extensions/triangle.inx
 /usr/share/inkscape/extensions/triangle.py
+/usr/share/inkscape/extensions/twirl.inx
+/usr/share/inkscape/extensions/twirl.py
 /usr/share/inkscape/extensions/ungroup_deep.inx
 /usr/share/inkscape/extensions/ungroup_deep.py
 /usr/share/inkscape/extensions/voronoi.py
-/usr/share/inkscape/extensions/voronoi2svg.inx
-/usr/share/inkscape/extensions/voronoi2svg.py
+/usr/share/inkscape/extensions/voronoi_diagram.inx
+/usr/share/inkscape/extensions/voronoi_diagram.py
+/usr/share/inkscape/extensions/voronoi_fill.inx
+/usr/share/inkscape/extensions/voronoi_fill.py
 /usr/share/inkscape/extensions/web_interactive_mockup.inx
 /usr/share/inkscape/extensions/web_interactive_mockup.py
 /usr/share/inkscape/extensions/web_set_att.inx
@@ -1022,19 +1099,8 @@ popd
 /usr/share/inkscape/extensions/webslicer_effect.py
 /usr/share/inkscape/extensions/webslicer_export.inx
 /usr/share/inkscape/extensions/webslicer_export.py
-/usr/share/inkscape/extensions/whirl.inx
-/usr/share/inkscape/extensions/whirl.py
 /usr/share/inkscape/extensions/wireframe_sphere.inx
 /usr/share/inkscape/extensions/wireframe_sphere.py
-/usr/share/inkscape/extensions/xaml2svg.inx
-/usr/share/inkscape/extensions/xaml2svg.xsl
-/usr/share/inkscape/extensions/xaml2svg/animation.xsl
-/usr/share/inkscape/extensions/xaml2svg/brushes.xsl
-/usr/share/inkscape/extensions/xaml2svg/canvas.xsl
-/usr/share/inkscape/extensions/xaml2svg/geometry.xsl
-/usr/share/inkscape/extensions/xaml2svg/properties.xsl
-/usr/share/inkscape/extensions/xaml2svg/shapes.xsl
-/usr/share/inkscape/extensions/xaml2svg/transform.xsl
 /usr/share/inkscape/filters/README
 /usr/share/inkscape/filters/filters.svg
 /usr/share/inkscape/fonts/README
@@ -1069,6 +1135,7 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/connector-ignore.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/construct-grid.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/copy-rotate.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/corners.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/curvestitching.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/dashed-stroke.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/dialog-align-and-distribute.svg
@@ -1107,6 +1174,7 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/document-import-web.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/document-import.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/document-metadata.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/draw-booleans.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/draw-calligraphic.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/draw-connector.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/draw-cuboid.svg
@@ -1212,6 +1280,8 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/layer-raise.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/layer-rename.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/layer-top.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/list-add-symbolic.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/list-remove-symbolic.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/measure-segments.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/mirror-symmetry.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/mirroring-0000.svg
@@ -1284,6 +1354,7 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/path-division.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/path-effect-parameter-next.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/path-exclusion.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/path-flatten.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/path-inset.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/path-intersection.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/path-mask-edit.svg
@@ -1308,6 +1379,7 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/powerclip.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/powermask.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/powerstroke.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/preview-mode.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/pts2ellipse.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/rectangle-make-corners-sharp.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/rotate-random.svg
@@ -1323,6 +1395,8 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/selection-move-to-layer-below.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/selection-raise.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/selection-top.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/shapebuilder-tool-difference.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/shapebuilder-tool-union.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/show-bounding-box.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/show-dialogs.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/show-grid.svg
@@ -1360,9 +1434,11 @@ popd
 /usr/share/inkscape/icons/Tango/scalable/actions/stroke-join-miter.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/stroke-join-round.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/stroke-to-path.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/symbols.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/taper-stroke.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/text-convert-to-regular.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/text-flow-into-frame.svg
+/usr/share/inkscape/icons/Tango/scalable/actions/text-flow-subtract-frame.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/text-put-on-path.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/text-remove-from-path.svg
 /usr/share/inkscape/icons/Tango/scalable/actions/text-unflow.svg
@@ -1416,6 +1492,8 @@ popd
 /usr/share/inkscape/icons/hicolor/cursors/box.svg
 /usr/share/inkscape/icons/hicolor/cursors/calligraphy.svg
 /usr/share/inkscape/icons/hicolor/cursors/connector.svg
+/usr/share/inkscape/icons/hicolor/cursors/cursor-delete.svg
+/usr/share/inkscape/icons/hicolor/cursors/cursor-union.svg
 /usr/share/inkscape/icons/hicolor/cursors/cursors.css
 /usr/share/inkscape/icons/hicolor/cursors/dropper-drop-fill.svg
 /usr/share/inkscape/icons/hicolor/cursors/dropper-drop-stroke.svg
@@ -1508,14 +1586,17 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/bspline.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/bug.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/clone-original.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/close.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-fill.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-gradient.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-management.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/color-palette.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-picker.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-cms.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-cmyk.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-hsluv.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-hsx.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-okhsl.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-rgb.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-selector-wheel.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/color-tag.svg
@@ -1526,6 +1607,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/connector-orthogonal.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/construct-grid.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/copy-rotate.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/corners.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/curvestitching.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dashed-stroke.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-align-and-distribute.svg
@@ -1539,6 +1621,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-messages.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-object-properties.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-objects.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/dialog-paint-server.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-path-effects.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-rows-and-columns.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-scripts.svg
@@ -1549,6 +1632,16 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-tile-clones.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-transform.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/dialog-xml-editor.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-alt.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-enhance-stroke-alt.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-enhance-stroke.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-no-filter-alt.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-no-filter.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-outline-alt.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-outline-overlay-alt.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-outline-overlay.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display-outline.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/display.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/distribute-graph-directed.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/distribute-graph.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/distribute-horizontal-baseline.svg
@@ -1566,6 +1659,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/distribute-vertical-gaps.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/distribute-vertical-node.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/distribute-vertical-top.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/dnd.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-cleanup.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-export.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-import-web.svg
@@ -1575,8 +1669,10 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-open.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-print.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-properties.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/document-resources.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-revert.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/document-save.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/draw-booleans.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/draw-calligraphic.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/draw-connector.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/draw-cuboid.svg
@@ -1610,6 +1706,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/draw-trace-background.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/draw-use-pressure.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/draw-use-tilt.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/edit-clear-value.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/edit-clone-link-lpe.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/edit-clone-link.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/edit-clone-unlink.svg
@@ -1650,6 +1747,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/exchange-positions-clockwise.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/exchange-positions-zorder.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/exchange-positions.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/experimental-outline.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/experimental.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/feBlend-icon.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/feColorMatrix-icon.svg
@@ -1667,12 +1765,15 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/feSpecularLighting-icon.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/feTile-icon.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/feTurbulence-icon.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/file-link.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/fill-between-many.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/fill-between-strokes.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/fill-rule-even-odd.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/fill-rule-nonzero.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/fillet-chamfer.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/flatten-down.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/flatten.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/font_collections.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/format-indent-less.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/format-indent-more.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/frmt-text-direction-horizontal.svg
@@ -1681,6 +1782,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/frmt-text-direction-vertical.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/gap-random-x.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/gap-random-y.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/gear.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/gears.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/glyph-copy-from.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/glyph-edit.svg
@@ -1692,6 +1794,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/gradient-spread-pad.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/gradient-spread-reflect.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/gradient-spread-repeat.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/grayscale-mode.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/grid-axonometric.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/grid-rectangular.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/guides.svg
@@ -1728,11 +1831,18 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/layer-raise.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/layer-rename.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/layer-top.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/layout-auto.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/layout-horizontal.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/layout-vertical.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/list-add-symbolic.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/list-remove-symbolic.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/lpe-connector.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/markers.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/matrix-2d.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/measure-segments.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/mesh-gradient-fit.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/mesh-gradient.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/minus.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/mirror-symmetry.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/mirroring-0000.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/mirroring-0001.svg
@@ -1769,6 +1879,8 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/node_insert_min_x.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/node_insert_min_y.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/none.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-blend-mode-normal.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-blend-mode.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-columns.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-fill.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-flip-hor.svg
@@ -1777,13 +1889,19 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-flip-vertical.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-group.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-hidden.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-level.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-locked.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-opaque.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-rotate-left.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-rotate-right.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-rows.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-select.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-stroke-style.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-stroke.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-to-path.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-translucent-blend-mode.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-translucent.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/object-transparent.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-tweak-attract.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-tweak-blur.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/object-tweak-duplicate.svg
@@ -1807,6 +1925,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/orient-auto.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/out-of-gamut-icon.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/overlay-clip.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/overlay-clipmask.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/overlay-mask.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/pack-less.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/pack-more.svg
@@ -1841,6 +1960,8 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/path-division.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/path-effect-parameter-next.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/path-exclusion.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/path-flatten.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/path-fracture.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/path-inset.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/path-intersection.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/path-mask-edit.svg
@@ -1863,12 +1984,15 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/perspective-envelope.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/perspective-parallel.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/pixelart-trace.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/plus.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/powerclip.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/powermask.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/powerstroke.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/preferences-system.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/preview-mode.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/pts2ellipse.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/randomize.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/rectangle-make-corners-round.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/rectangle-make-corners-sharp.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/remove-color.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/reset-settings.svg
@@ -1876,6 +2000,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/rotate-random.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/rough-hatches.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/roughen.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/rounding.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/rows.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/ruler.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/scale-random.svg
@@ -1909,6 +2034,8 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/shape-text-flow.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/shape-text.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/shape-unknown.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/shapebuilder-tool-difference.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/shapebuilder-tool-union.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/show-bounding-box.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/show-dialogs.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/show-grid.svg
@@ -1916,6 +2043,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/show-handles.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/show-node-handles.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/show-path-outline.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/show-sources.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/simplify.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/skeletal.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/sketch.svg
@@ -1967,6 +2095,7 @@ popd
 /usr/share/inkscape/icons/hicolor/scalable/actions/taper-stroke.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/text-convert-to-regular.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/text-flow-into-frame.svg
+/usr/share/inkscape/icons/hicolor/scalable/actions/text-flow-subtract-frame.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/text-orientation-auto.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/text-orientation-sideways.svg
 /usr/share/inkscape/icons/hicolor/scalable/actions/text-orientation-upright.svg
@@ -2063,14 +2192,17 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/bspline-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/bug-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/clone-original-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/close-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-fill-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-gradient-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-management-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/color-palette-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-picker-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-cms-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-cmyk-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-hsluv-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-hsx-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-okhsl-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-rgb-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-selector-wheel-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/color-tag-symbolic.svg
@@ -2081,6 +2213,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/connector-orthogonal-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/construct-grid-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/copy-rotate-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/corners-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/curvestitching-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dashed-stroke-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-align-and-distribute-symbolic.svg
@@ -2094,6 +2227,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-messages-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-object-properties-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-objects-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-paint-server-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-path-effects-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-rows-and-columns-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-scripts-symbolic.svg
@@ -2104,6 +2238,16 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-tile-clones-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-transform-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/dialog-xml-editor-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-alt-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-enhance-stroke-alt-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-enhance-stroke-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-no-filter-alt-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-no-filter-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-outline-alt-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-outline-overlay-alt-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-outline-overlay-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-outline-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/display-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/distribute-graph-directed-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/distribute-graph-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/distribute-horizontal-baseline-symbolic.svg
@@ -2121,6 +2265,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/distribute-vertical-gaps-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/distribute-vertical-node-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/distribute-vertical-top-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/dnd-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-cleanup-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-export-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-import-symbolic.svg
@@ -2130,8 +2275,10 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-open-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-print-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-properties-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/document-resources-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-revert-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/document-save-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/draw-booleans-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/draw-calligraphic-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/draw-connector-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/draw-cuboid-symbolic.svg
@@ -2165,6 +2312,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/draw-trace-background-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/draw-use-pressure-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/draw-use-tilt-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/edit-clear-value-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/edit-clone-link-lpe-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/edit-clone-link-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/edit-clone-symbolic.svg
@@ -2205,6 +2353,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/exchange-positions-clockwise-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/exchange-positions-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/exchange-positions-zorder-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/experimental-outline-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/experimental-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/feBlend-icon-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/feColorMatrix-icon-symbolic.svg
@@ -2222,12 +2371,15 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/feSpecularLighting-icon-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/feTile-icon-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/feTurbulence-icon-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/file-link-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/fill-between-many-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/fill-between-strokes-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/fill-rule-even-odd-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/fill-rule-nonzero-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/fillet-chamfer-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/flatten-down-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/flatten-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/font_collections-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/format-indent-less-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/format-indent-more-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/frmt-text-direction-horizontal-symbolic.svg
@@ -2236,6 +2388,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/frmt-text-direction-vertical-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/gap-random-x-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/gap-random-y-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/gear-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/gears-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/glyph-copy-from-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/glyph-edit-symbolic.svg
@@ -2247,6 +2400,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/gradient-spread-pad-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/gradient-spread-reflect-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/gradient-spread-repeat-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/grayscale-mode-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/grid-axonometric-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/grid-rectangular-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/guides-symbolic.svg
@@ -2283,11 +2437,18 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/layer-raise-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/layer-rename-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/layer-top-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/layout-auto-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/layout-horizontal-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/layout-vertical-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/list-add-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/list-remove-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/lpe-connector-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/markers-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/matrix-2d-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/measure-segments-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/mesh-gradient-fit-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/mesh-gradient-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/minus-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/mirror-symmetry-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/mirroring-0000-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/mirroring-0001-symbolic.svg
@@ -2324,6 +2485,8 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/node_insert_min_x-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/node_insert_min_y-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/none-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-blend-mode-normal-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-blend-mode-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-columns-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-fill-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-flip-hor-symbolic.svg
@@ -2332,13 +2495,19 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-flip-vertical-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-group-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-hidden-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-level-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-locked-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-opaque-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-rotate-left-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-rotate-right-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-rows-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-select-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-stroke-style-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-stroke-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-to-path-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-translucent-blend-mode-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-translucent-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/object-transparent-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-tweak-attract-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-tweak-blur-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/object-tweak-duplicate-symbolic.svg
@@ -2362,6 +2531,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/orient-auto-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/out-of-gamut-icon-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/overlay-clip-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/overlay-clipmask-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/overlay-mask-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/pack-less-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/pack-more-symbolic.svg
@@ -2396,6 +2566,8 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/path-division-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/path-effect-parameter-next-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/path-exclusion-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/path-flatten-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/path-fracture-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/path-inset-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/path-intersection-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/path-mask-edit-symbolic.svg
@@ -2418,12 +2590,15 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/perspective-envelope-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/perspective-parallel-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/pixelart-trace-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/plus-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/powerclip-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/powermask-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/powerstroke-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/preferences-system-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/preview-mode-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/pts2ellipse-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/randomize-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/rectangle-make-corners-round-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/rectangle-make-corners-sharp-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/remove-color-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/reset-settings-symbolic.svg
@@ -2431,6 +2606,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/rotate-random-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/rough-hatches-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/roughen-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/rounding-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/rows-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/ruler-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/scale-random-symbolic.svg
@@ -2464,6 +2640,8 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/shape-text-flow-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/shape-text-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/shape-unknown-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/shapebuilder-tool-difference-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/shapebuilder-tool-union-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/show-bounding-box-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/show-dialogs-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/show-grid-symbolic.svg
@@ -2471,6 +2649,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/show-handles-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/show-node-handles-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/show-path-outline-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/show-sources-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/simplify-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/skeletal-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/sketch-symbolic.svg
@@ -2522,6 +2701,7 @@ popd
 /usr/share/inkscape/icons/hicolor/symbolic/actions/taper-stroke-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/text-convert-to-regular-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/text-flow-into-frame-symbolic.svg
+/usr/share/inkscape/icons/hicolor/symbolic/actions/text-flow-subtract-frame-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/text-orientation-auto-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/text-orientation-sideways-symbolic.svg
 /usr/share/inkscape/icons/hicolor/symbolic/actions/text-orientation-upright-symbolic.svg
@@ -2625,14 +2805,17 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/bspline-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/bug-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/clone-original-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/close-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-fill-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-gradient-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-management-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/color-palette-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-picker-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-cms-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-cmyk-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-hsluv-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-hsx-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-okhsl-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-rgb-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-selector-wheel-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/color-tag-symbolic.svg
@@ -2643,6 +2826,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/connector-orthogonal-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/construct-grid-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/copy-rotate-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/corners-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/curvestitching-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dashed-stroke-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-align-and-distribute-symbolic.svg
@@ -2656,6 +2840,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-messages-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-object-properties-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-objects-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-paint-server-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-path-effects-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-rows-and-columns-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-scripts-symbolic.svg
@@ -2666,6 +2851,16 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-tile-clones-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-transform-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/dialog-xml-editor-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-alt-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-enhance-stroke-alt-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-enhance-stroke-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-no-filter-alt-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-no-filter-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-outline-alt-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-outline-overlay-alt-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-outline-overlay-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-outline-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/display-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/distribute-graph-directed-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/distribute-graph-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/distribute-horizontal-baseline-symbolic.svg
@@ -2683,6 +2878,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/distribute-vertical-gaps-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/distribute-vertical-node-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/distribute-vertical-top-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/dnd-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-cleanup-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-export-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-import-symbolic.svg
@@ -2692,8 +2888,10 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-open-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-print-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-properties-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/document-resources-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-revert-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/document-save-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/draw-booleans-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/draw-calligraphic-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/draw-connector-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/draw-cuboid-symbolic.svg
@@ -2727,6 +2925,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/draw-trace-background-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/draw-use-pressure-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/draw-use-tilt-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/edit-clear-value-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/edit-clone-link-lpe-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/edit-clone-link-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/edit-clone-symbolic.svg
@@ -2767,6 +2966,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/exchange-positions-clockwise-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/exchange-positions-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/exchange-positions-zorder-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/experimental-outline-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/experimental-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/feBlend-icon-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/feColorMatrix-icon-symbolic.svg
@@ -2784,12 +2984,15 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/feSpecularLighting-icon-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/feTile-icon-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/feTurbulence-icon-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/file-link-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/fill-between-many-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/fill-between-strokes-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/fill-rule-even-odd-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/fill-rule-nonzero-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/fillet-chamfer-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/flatten-down-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/flatten-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/font_collections-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/format-indent-less-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/format-indent-more-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/frmt-text-direction-horizontal-symbolic.svg
@@ -2798,6 +3001,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/frmt-text-direction-vertical-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/gap-random-x-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/gap-random-y-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/gear-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/gears-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/glyph-copy-from-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/glyph-edit-symbolic.svg
@@ -2809,6 +3013,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/gradient-spread-pad-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/gradient-spread-reflect-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/gradient-spread-repeat-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/grayscale-mode-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/grid-axonometric-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/grid-rectangular-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/guides-symbolic.svg
@@ -2845,11 +3050,18 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/layer-raise-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/layer-rename-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/layer-top-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/layout-auto-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/layout-horizontal-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/layout-vertical-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/list-add-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/list-remove-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/lpe-connector-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/markers-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/matrix-2d-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/measure-segments-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/mesh-gradient-fit-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/mesh-gradient-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/minus-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/mirror-symmetry-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/mirroring-0000-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/mirroring-0001-symbolic.svg
@@ -2886,6 +3098,8 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/node_insert_min_x-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/node_insert_min_y-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/none-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-blend-mode-normal-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-blend-mode-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-columns-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-fill-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-flip-hor-symbolic.svg
@@ -2894,13 +3108,19 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-flip-vertical-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-group-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-hidden-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-level-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-locked-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-opaque-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-rotate-left-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-rotate-right-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-rows-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-select-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-stroke-style-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-stroke-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-to-path-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-translucent-blend-mode-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-translucent-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/object-transparent-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-tweak-attract-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-tweak-blur-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/object-tweak-duplicate-symbolic.svg
@@ -2924,6 +3144,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/orient-auto-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/out-of-gamut-icon-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/overlay-clip-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/overlay-clipmask-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/overlay-mask-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/pack-less-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/pack-more-symbolic.svg
@@ -2958,6 +3179,8 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/path-division-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/path-effect-parameter-next-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/path-exclusion-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/path-flatten-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/path-fracture-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/path-inset-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/path-intersection-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/path-mask-edit-symbolic.svg
@@ -2980,12 +3203,15 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/perspective-envelope-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/perspective-parallel-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/pixelart-trace-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/plus-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/powerclip-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/powermask-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/powerstroke-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/preferences-system-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/preview-mode-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/pts2ellipse-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/randomize-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/rectangle-make-corners-round-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/rectangle-make-corners-sharp-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/remove-color-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/reset-settings-symbolic.svg
@@ -2993,6 +3219,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/rotate-random-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/rough-hatches-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/roughen-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/rounding-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/rows-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/ruler-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/scale-random-symbolic.svg
@@ -3026,6 +3253,8 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/shape-text-flow-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/shape-text-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/shape-unknown-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/shapebuilder-tool-difference-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/shapebuilder-tool-union-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/show-bounding-box-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/show-dialogs-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/show-grid-symbolic.svg
@@ -3033,6 +3262,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/show-handles-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/show-node-handles-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/show-path-outline-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/show-sources-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/simplify-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/skeletal-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/sketch-symbolic.svg
@@ -3084,6 +3314,7 @@ popd
 /usr/share/inkscape/icons/multicolor/symbolic/actions/taper-stroke-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/text-convert-to-regular-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/text-flow-into-frame-symbolic.svg
+/usr/share/inkscape/icons/multicolor/symbolic/actions/text-flow-subtract-frame-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/text-orientation-auto-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/text-orientation-sideways-symbolic.svg
 /usr/share/inkscape/icons/multicolor/symbolic/actions/text-orientation-upright-symbolic.svg
@@ -3156,9 +3387,17 @@ popd
 /usr/share/inkscape/keys/xara.xml
 /usr/share/inkscape/keys/zoner-draw.xml
 /usr/share/inkscape/markers/markers.svg
+"/usr/share/inkscape/paint/Asian patterns.svg"
+/usr/share/inkscape/paint/Decoratives.svg
+/usr/share/inkscape/paint/Geometrical.svg
+/usr/share/inkscape/paint/Grids.svg
+/usr/share/inkscape/paint/Halftones.svg
+"/usr/share/inkscape/paint/Nature patterns.svg"
+/usr/share/inkscape/paint/Patterns.svg
 /usr/share/inkscape/paint/README
+/usr/share/inkscape/paint/Shading.svg
+/usr/share/inkscape/paint/Textures.svg
 /usr/share/inkscape/paint/hatches.svg
-/usr/share/inkscape/paint/patterns.svg
 /usr/share/inkscape/palettes/Android-icon-palette.gpl
 /usr/share/inkscape/palettes/Blues.gpl
 /usr/share/inkscape/palettes/Bootstrap5.gpl
@@ -3174,6 +3413,7 @@ popd
 /usr/share/inkscape/palettes/README
 /usr/share/inkscape/palettes/Reds.gpl
 /usr/share/inkscape/palettes/Royal.gpl
+/usr/share/inkscape/palettes/Solarized.gpl
 /usr/share/inkscape/palettes/Tango-Palette.gpl
 /usr/share/inkscape/palettes/Topographic.gpl
 /usr/share/inkscape/palettes/Ubuntu.gpl
@@ -3187,6 +3427,7 @@ popd
 /usr/share/inkscape/pixmaps/README
 /usr/share/inkscape/pixmaps/inkscape-logo-icons-sized.svg
 /usr/share/inkscape/pixmaps/inkscape.svg
+/usr/share/inkscape/pixmaps/preview_loading.svg
 /usr/share/inkscape/pixmaps/remove-color.png
 /usr/share/inkscape/pixmaps/support.png
 /usr/share/inkscape/pixmaps/symbolic_icons.svg
@@ -3196,25 +3437,7 @@ popd
 /usr/share/inkscape/screens/about.svg
 /usr/share/inkscape/screens/start-splash.png
 /usr/share/inkscape/screens/start-support.png
-/usr/share/inkscape/screens/start-welcome-text.ca.svg
-/usr/share/inkscape/screens/start-welcome-text.cs.svg
-/usr/share/inkscape/screens/start-welcome-text.de.svg
-/usr/share/inkscape/screens/start-welcome-text.es.svg
-/usr/share/inkscape/screens/start-welcome-text.fr.svg
-/usr/share/inkscape/screens/start-welcome-text.hu.svg
-/usr/share/inkscape/screens/start-welcome-text.is.svg
-/usr/share/inkscape/screens/start-welcome-text.it.svg
-/usr/share/inkscape/screens/start-welcome-text.ja.svg
-/usr/share/inkscape/screens/start-welcome-text.pl.svg
-/usr/share/inkscape/screens/start-welcome-text.pt.svg
-/usr/share/inkscape/screens/start-welcome-text.pt_BR.svg
-/usr/share/inkscape/screens/start-welcome-text.ru.svg
-/usr/share/inkscape/screens/start-welcome-text.sk.svg
-/usr/share/inkscape/screens/start-welcome-text.sl.svg
 /usr/share/inkscape/screens/start-welcome-text.svg
-/usr/share/inkscape/screens/start-welcome-text.uk.svg
-/usr/share/inkscape/screens/start-welcome-text.zh_CN.svg
-/usr/share/inkscape/screens/start-welcome-text.zh_TW.svg
 /usr/share/inkscape/screens/start-welcome.png
 /usr/share/inkscape/symbols/AigaSymbols.svg
 /usr/share/inkscape/symbols/BalloonSymbols.svg
@@ -3222,6 +3445,22 @@ popd
 /usr/share/inkscape/symbols/LogicSymbols.svg
 /usr/share/inkscape/symbols/MapSymbolsNPS.svg
 /usr/share/inkscape/symbols/README
+/usr/share/inkscape/symbols/sjjb-accommodation.svg
+/usr/share/inkscape/symbols/sjjb-amenity.svg
+/usr/share/inkscape/symbols/sjjb-barrier.svg
+/usr/share/inkscape/symbols/sjjb-education.svg
+/usr/share/inkscape/symbols/sjjb-food.svg
+/usr/share/inkscape/symbols/sjjb-health.svg
+/usr/share/inkscape/symbols/sjjb-landuse.svg
+/usr/share/inkscape/symbols/sjjb-money.svg
+/usr/share/inkscape/symbols/sjjb-poi.svg
+/usr/share/inkscape/symbols/sjjb-power.svg
+/usr/share/inkscape/symbols/sjjb-shopping.svg
+/usr/share/inkscape/symbols/sjjb-sport.svg
+/usr/share/inkscape/symbols/sjjb-tourist.svg
+/usr/share/inkscape/symbols/sjjb-transport.svg
+/usr/share/inkscape/symbols/sjjb-water.svg
+/usr/share/inkscape/symbols/sjjb-worship.svg
 /usr/share/inkscape/templates/A4leaflet-3fold-Roll.svg
 /usr/share/inkscape/templates/CD_label_120x120.svg
 /usr/share/inkscape/templates/LaTeX_Beamer.svg
@@ -3302,6 +3541,32 @@ popd
 /usr/share/inkscape/templates/default.zh_TW.svg
 /usr/share/inkscape/templates/default_pt.svg
 /usr/share/inkscape/templates/default_px.svg
+/usr/share/inkscape/templates/icons/about.svg
+/usr/share/inkscape/templates/icons/custom.svg
+/usr/share/inkscape/templates/icons/default.svg
+/usr/share/inkscape/templates/icons/desktop_hd_landscape.svg
+/usr/share/inkscape/templates/icons/desktop_landscape.svg
+/usr/share/inkscape/templates/icons/envelope_landscape.svg
+/usr/share/inkscape/templates/icons/envelope_portrait.svg
+/usr/share/inkscape/templates/icons/icon_square.svg
+/usr/share/inkscape/templates/icons/image_landscape.svg
+/usr/share/inkscape/templates/icons/image_portrait.svg
+/usr/share/inkscape/templates/icons/image_square.svg
+/usr/share/inkscape/templates/icons/mobile_portrait.svg
+/usr/share/inkscape/templates/icons/photo_landscape.svg
+/usr/share/inkscape/templates/icons/photo_portrait.svg
+/usr/share/inkscape/templates/icons/photo_square.svg
+/usr/share/inkscape/templates/icons/print_US_landscape.svg
+/usr/share/inkscape/templates/icons/print_US_portrait.svg
+/usr/share/inkscape/templates/icons/print_landscape.svg
+/usr/share/inkscape/templates/icons/print_portrait.svg
+/usr/share/inkscape/templates/icons/social_landscape.svg
+/usr/share/inkscape/templates/icons/social_portrait.svg
+/usr/share/inkscape/templates/icons/social_square.svg
+/usr/share/inkscape/templates/icons/tablet_landscape.svg
+/usr/share/inkscape/templates/icons/video_landscape.svg
+/usr/share/inkscape/templates/icons/video_portrait.svg
+/usr/share/inkscape/templates/icons/video_square.svg
 /usr/share/inkscape/templates/no_layers.svg
 /usr/share/inkscape/themes/LICENSE.txt
 /usr/share/inkscape/themes/Minwaita-Inkscape/gtk-3.0/assets/bullet-symbolic.symbolic.png
@@ -3466,9 +3731,11 @@ popd
 /usr/share/inkscape/tutorials/edge3d.svg
 /usr/share/inkscape/tutorials/making_markers.svg
 /usr/share/inkscape/tutorials/oldguitar.jpg
+/usr/share/inkscape/tutorials/pixelart-dialog.de.png
 /usr/share/inkscape/tutorials/pixelart-dialog.el.png
 /usr/share/inkscape/tutorials/pixelart-dialog.hu.png
 /usr/share/inkscape/tutorials/pixelart-dialog.png
+/usr/share/inkscape/tutorials/potrace.de.png
 /usr/share/inkscape/tutorials/potrace.el.png
 /usr/share/inkscape/tutorials/potrace.es.png
 /usr/share/inkscape/tutorials/potrace.eu.png
@@ -3696,62 +3963,61 @@ popd
 /usr/share/inkscape/ui/Adwaita.css
 /usr/share/inkscape/ui/Minwaita-Inkscape.css
 /usr/share/inkscape/ui/align-and-distribute.ui
+/usr/share/inkscape/ui/attribute-edit-component.glade
 /usr/share/inkscape/ui/bad-marker.svg
+/usr/share/inkscape/ui/canvas-notice.glade
 /usr/share/inkscape/ui/color-palette.glade
 /usr/share/inkscape/ui/command-palette-main.glade
 /usr/share/inkscape/ui/command-palette-operation.glade
+/usr/share/inkscape/ui/completion-box.glade
+/usr/share/inkscape/ui/default-dialog-state.ini
+/usr/share/inkscape/ui/dialog-crash.glade
 /usr/share/inkscape/ui/dialog-css.glade
+/usr/share/inkscape/ui/dialog-document-resources.glade
+/usr/share/inkscape/ui/dialog-export-prefs.glade
 /usr/share/inkscape/ui/dialog-export.glade
 /usr/share/inkscape/ui/dialog-filter-editor.glade
+/usr/share/inkscape/ui/dialog-font-collections.glade
 /usr/share/inkscape/ui/dialog-livepatheffect-add.glade
 /usr/share/inkscape/ui/dialog-livepatheffect-effect.glade
+/usr/share/inkscape/ui/dialog-livepatheffect-item.glade
+/usr/share/inkscape/ui/dialog-livepatheffect.glade
+/usr/share/inkscape/ui/dialog-objects.glade
+/usr/share/inkscape/ui/dialog-paint-servers.glade
 /usr/share/inkscape/ui/dialog-save-template.glade
+/usr/share/inkscape/ui/dialog-symbols.glade
 /usr/share/inkscape/ui/dialog-text-edit.glade
 /usr/share/inkscape/ui/dialog-trace.glade
+/usr/share/inkscape/ui/dialog-xml.glade
+/usr/share/inkscape/ui/display-popup.glade
+/usr/share/inkscape/ui/extension-pdfinput.glade
 /usr/share/inkscape/ui/gradient-edit.glade
 /usr/share/inkscape/ui/gradient-stop.svg
 /usr/share/inkscape/ui/gradient-tip.svg
 /usr/share/inkscape/ui/highlight-colors.css
+/usr/share/inkscape/ui/image-properties.glade
 /usr/share/inkscape/ui/inkscape-about.glade
 /usr/share/inkscape/ui/inkscape-start.glade
+/usr/share/inkscape/ui/inline-css.lang
 /usr/share/inkscape/ui/mac.css
 /usr/share/inkscape/ui/marker-popup.glade
 /usr/share/inkscape/ui/menus.ui
+/usr/share/inkscape/ui/object-attributes.glade
 /usr/share/inkscape/ui/page-properties.glade
+/usr/share/inkscape/ui/pattern-edit.glade
 /usr/share/inkscape/ui/resources/canvas_ad.png
 /usr/share/inkscape/ui/resources/canvas_aw.png
 /usr/share/inkscape/ui/resources/canvas_cd.png
 /usr/share/inkscape/ui/resources/canvas_cw.png
 /usr/share/inkscape/ui/resources/canvas_sw.png
-/usr/share/inkscape/ui/resources/template_about.svg
-/usr/share/inkscape/ui/resources/template_businesscard_landscape.svg
-/usr/share/inkscape/ui/resources/template_businesscard_portrait.svg
-/usr/share/inkscape/ui/resources/template_businesscard_square.svg
-/usr/share/inkscape/ui/resources/template_desktop_hd_landscape.svg
-/usr/share/inkscape/ui/resources/template_desktop_landscape.svg
-/usr/share/inkscape/ui/resources/template_envelope_landscape.svg
-/usr/share/inkscape/ui/resources/template_envelope_portrait.svg
-/usr/share/inkscape/ui/resources/template_icon_square.svg
-/usr/share/inkscape/ui/resources/template_image_landscape.svg
-/usr/share/inkscape/ui/resources/template_image_portrait.svg
-/usr/share/inkscape/ui/resources/template_image_square.svg
-/usr/share/inkscape/ui/resources/template_mobile_portrait.svg
-/usr/share/inkscape/ui/resources/template_photo_landscape.svg
-/usr/share/inkscape/ui/resources/template_photo_portrait.svg
-/usr/share/inkscape/ui/resources/template_photo_square.svg
-/usr/share/inkscape/ui/resources/template_print_US_landscape.svg
-/usr/share/inkscape/ui/resources/template_print_US_portrait.svg
-/usr/share/inkscape/ui/resources/template_print_landscape.svg
-/usr/share/inkscape/ui/resources/template_print_portrait.svg
-/usr/share/inkscape/ui/resources/template_social_landscape.svg
-/usr/share/inkscape/ui/resources/template_social_portrait.svg
-/usr/share/inkscape/ui/resources/template_social_square.svg
-/usr/share/inkscape/ui/resources/template_tablet_landscape.svg
-/usr/share/inkscape/ui/resources/template_video_landscape.svg
-/usr/share/inkscape/ui/resources/template_video_portrait.svg
-/usr/share/inkscape/ui/resources/template_video_square.svg
 /usr/share/inkscape/ui/spinbutton.css
 /usr/share/inkscape/ui/style.css
+/usr/share/inkscape/ui/svgd.lang
+/usr/share/inkscape/ui/svgpoints.lang
+/usr/share/inkscape/ui/syntax-themes/syntax-theme-dark.xml
+/usr/share/inkscape/ui/syntax-themes/syntax-theme-light.xml
+/usr/share/inkscape/ui/syntax-themes/syntax-theme-none.xml
+/usr/share/inkscape/ui/toolbar-booleans.ui
 /usr/share/inkscape/ui/toolbar-commands.ui
 /usr/share/inkscape/ui/toolbar-page.ui
 /usr/share/inkscape/ui/toolbar-select.ui
@@ -3760,101 +4026,103 @@ popd
 /usr/share/inkscape/ui/toolbar-tool.ui
 /usr/share/inkscape/ui/toolbar-zoom.ui
 /usr/share/inkscape/ui/units.xml
+/usr/share/inkscape/ui/user.css
+/usr/share/inkscape/ui/widget-new-from-template.ui
 /usr/share/inkscape/ui/win32.css
 /usr/share/metainfo/org.inkscape.Inkscape.appdata.xml
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/2geom-1.2.2/2geom/2geom.h
-/usr/include/2geom-1.2.2/2geom/affine.h
-/usr/include/2geom-1.2.2/2geom/angle.h
-/usr/include/2geom-1.2.2/2geom/basic-intersection.h
-/usr/include/2geom-1.2.2/2geom/bezier-curve.h
-/usr/include/2geom-1.2.2/2geom/bezier-to-sbasis.h
-/usr/include/2geom-1.2.2/2geom/bezier-utils.h
-/usr/include/2geom-1.2.2/2geom/bezier.h
-/usr/include/2geom-1.2.2/2geom/cairo-path-sink.h
-/usr/include/2geom-1.2.2/2geom/choose.h
-/usr/include/2geom-1.2.2/2geom/circle.h
-/usr/include/2geom-1.2.2/2geom/concepts.h
-/usr/include/2geom-1.2.2/2geom/conic_section_clipper.h
-/usr/include/2geom-1.2.2/2geom/conic_section_clipper_cr.h
-/usr/include/2geom-1.2.2/2geom/conic_section_clipper_impl.h
-/usr/include/2geom-1.2.2/2geom/conicsec.h
-/usr/include/2geom-1.2.2/2geom/convex-hull.h
-/usr/include/2geom-1.2.2/2geom/coord.h
-/usr/include/2geom-1.2.2/2geom/crossing.h
-/usr/include/2geom-1.2.2/2geom/curve.h
-/usr/include/2geom-1.2.2/2geom/curves.h
-/usr/include/2geom-1.2.2/2geom/d2.h
-/usr/include/2geom-1.2.2/2geom/ellipse.h
-/usr/include/2geom-1.2.2/2geom/elliptical-arc.h
-/usr/include/2geom-1.2.2/2geom/exception.h
-/usr/include/2geom-1.2.2/2geom/forward.h
-/usr/include/2geom-1.2.2/2geom/generic-interval.h
-/usr/include/2geom-1.2.2/2geom/generic-rect.h
-/usr/include/2geom-1.2.2/2geom/geom.h
-/usr/include/2geom-1.2.2/2geom/int-interval.h
-/usr/include/2geom-1.2.2/2geom/int-point.h
-/usr/include/2geom-1.2.2/2geom/int-rect.h
-/usr/include/2geom-1.2.2/2geom/intersection-graph.h
-/usr/include/2geom-1.2.2/2geom/intersection.h
-/usr/include/2geom-1.2.2/2geom/interval.h
-/usr/include/2geom-1.2.2/2geom/intervaltree/interval_tree.h
-/usr/include/2geom-1.2.2/2geom/line.h
-/usr/include/2geom-1.2.2/2geom/linear.h
-/usr/include/2geom-1.2.2/2geom/math-utils.h
-/usr/include/2geom-1.2.2/2geom/nearest-time.h
-/usr/include/2geom-1.2.2/2geom/numeric/fitting-model.h
-/usr/include/2geom-1.2.2/2geom/numeric/fitting-tool.h
-/usr/include/2geom-1.2.2/2geom/numeric/linear_system.h
-/usr/include/2geom-1.2.2/2geom/numeric/matrix.h
-/usr/include/2geom-1.2.2/2geom/numeric/symmetric-matrix-fs-operation.h
-/usr/include/2geom-1.2.2/2geom/numeric/symmetric-matrix-fs-trace.h
-/usr/include/2geom-1.2.2/2geom/numeric/symmetric-matrix-fs.h
-/usr/include/2geom-1.2.2/2geom/numeric/vector.h
-/usr/include/2geom-1.2.2/2geom/ord.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/arc-length.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/chebyshev.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/intersection-by-smashing.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/linear-of.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/linearN.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/redblacktree.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/rtree.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/sbasis-of.h
-/usr/include/2geom-1.2.2/2geom/orphan-code/sbasisN.h
-/usr/include/2geom-1.2.2/2geom/parallelogram.h
-/usr/include/2geom-1.2.2/2geom/path-intersection.h
-/usr/include/2geom-1.2.2/2geom/path-sink.h
-/usr/include/2geom-1.2.2/2geom/path.h
-/usr/include/2geom-1.2.2/2geom/pathvector.h
-/usr/include/2geom-1.2.2/2geom/piecewise.h
-/usr/include/2geom-1.2.2/2geom/point.h
-/usr/include/2geom-1.2.2/2geom/polynomial.h
-/usr/include/2geom-1.2.2/2geom/ray.h
-/usr/include/2geom-1.2.2/2geom/rect.h
-/usr/include/2geom-1.2.2/2geom/sbasis-2d.h
-/usr/include/2geom-1.2.2/2geom/sbasis-curve.h
-/usr/include/2geom-1.2.2/2geom/sbasis-geometric.h
-/usr/include/2geom-1.2.2/2geom/sbasis-math.h
-/usr/include/2geom-1.2.2/2geom/sbasis-poly.h
-/usr/include/2geom-1.2.2/2geom/sbasis-to-bezier.h
-/usr/include/2geom-1.2.2/2geom/sbasis.h
-/usr/include/2geom-1.2.2/2geom/solver.h
-/usr/include/2geom-1.2.2/2geom/svg-path-parser.h
-/usr/include/2geom-1.2.2/2geom/svg-path-writer.h
-/usr/include/2geom-1.2.2/2geom/sweep-bounds.h
-/usr/include/2geom-1.2.2/2geom/sweeper.h
-/usr/include/2geom-1.2.2/2geom/symbolic/determinant-minor.h
-/usr/include/2geom-1.2.2/2geom/symbolic/implicit.h
-/usr/include/2geom-1.2.2/2geom/symbolic/matrix.h
-/usr/include/2geom-1.2.2/2geom/symbolic/multi-index.h
-/usr/include/2geom-1.2.2/2geom/symbolic/multipoly.h
-/usr/include/2geom-1.2.2/2geom/symbolic/mvpoly-tools.h
-/usr/include/2geom-1.2.2/2geom/symbolic/polynomial.h
-/usr/include/2geom-1.2.2/2geom/symbolic/unity-builder.h
-/usr/include/2geom-1.2.2/2geom/transforms.h
-/usr/include/2geom-1.2.2/2geom/utils.h
+/usr/include/2geom-1.3.0/2geom/2geom.h
+/usr/include/2geom-1.3.0/2geom/affine.h
+/usr/include/2geom-1.3.0/2geom/angle.h
+/usr/include/2geom-1.3.0/2geom/basic-intersection.h
+/usr/include/2geom-1.3.0/2geom/bezier-curve.h
+/usr/include/2geom-1.3.0/2geom/bezier-to-sbasis.h
+/usr/include/2geom-1.3.0/2geom/bezier-utils.h
+/usr/include/2geom-1.3.0/2geom/bezier.h
+/usr/include/2geom-1.3.0/2geom/cairo-path-sink.h
+/usr/include/2geom-1.3.0/2geom/choose.h
+/usr/include/2geom-1.3.0/2geom/circle.h
+/usr/include/2geom-1.3.0/2geom/concepts.h
+/usr/include/2geom-1.3.0/2geom/conic_section_clipper.h
+/usr/include/2geom-1.3.0/2geom/conic_section_clipper_cr.h
+/usr/include/2geom-1.3.0/2geom/conic_section_clipper_impl.h
+/usr/include/2geom-1.3.0/2geom/conicsec.h
+/usr/include/2geom-1.3.0/2geom/convex-hull.h
+/usr/include/2geom-1.3.0/2geom/coord.h
+/usr/include/2geom-1.3.0/2geom/crossing.h
+/usr/include/2geom-1.3.0/2geom/curve.h
+/usr/include/2geom-1.3.0/2geom/curves.h
+/usr/include/2geom-1.3.0/2geom/d2.h
+/usr/include/2geom-1.3.0/2geom/ellipse.h
+/usr/include/2geom-1.3.0/2geom/elliptical-arc.h
+/usr/include/2geom-1.3.0/2geom/exception.h
+/usr/include/2geom-1.3.0/2geom/forward.h
+/usr/include/2geom-1.3.0/2geom/generic-interval.h
+/usr/include/2geom-1.3.0/2geom/generic-rect.h
+/usr/include/2geom-1.3.0/2geom/geom.h
+/usr/include/2geom-1.3.0/2geom/int-interval.h
+/usr/include/2geom-1.3.0/2geom/int-point.h
+/usr/include/2geom-1.3.0/2geom/int-rect.h
+/usr/include/2geom-1.3.0/2geom/intersection-graph.h
+/usr/include/2geom-1.3.0/2geom/intersection.h
+/usr/include/2geom-1.3.0/2geom/interval.h
+/usr/include/2geom-1.3.0/2geom/intervaltree/interval_tree.h
+/usr/include/2geom-1.3.0/2geom/line.h
+/usr/include/2geom-1.3.0/2geom/linear.h
+/usr/include/2geom-1.3.0/2geom/math-utils.h
+/usr/include/2geom-1.3.0/2geom/nearest-time.h
+/usr/include/2geom-1.3.0/2geom/numeric/fitting-model.h
+/usr/include/2geom-1.3.0/2geom/numeric/fitting-tool.h
+/usr/include/2geom-1.3.0/2geom/numeric/linear_system.h
+/usr/include/2geom-1.3.0/2geom/numeric/matrix.h
+/usr/include/2geom-1.3.0/2geom/numeric/symmetric-matrix-fs-operation.h
+/usr/include/2geom-1.3.0/2geom/numeric/symmetric-matrix-fs-trace.h
+/usr/include/2geom-1.3.0/2geom/numeric/symmetric-matrix-fs.h
+/usr/include/2geom-1.3.0/2geom/numeric/vector.h
+/usr/include/2geom-1.3.0/2geom/ord.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/arc-length.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/chebyshev.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/intersection-by-smashing.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/linear-of.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/linearN.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/redblacktree.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/rtree.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/sbasis-of.h
+/usr/include/2geom-1.3.0/2geom/orphan-code/sbasisN.h
+/usr/include/2geom-1.3.0/2geom/parallelogram.h
+/usr/include/2geom-1.3.0/2geom/path-intersection.h
+/usr/include/2geom-1.3.0/2geom/path-sink.h
+/usr/include/2geom-1.3.0/2geom/path.h
+/usr/include/2geom-1.3.0/2geom/pathvector.h
+/usr/include/2geom-1.3.0/2geom/piecewise.h
+/usr/include/2geom-1.3.0/2geom/point.h
+/usr/include/2geom-1.3.0/2geom/polynomial.h
+/usr/include/2geom-1.3.0/2geom/ray.h
+/usr/include/2geom-1.3.0/2geom/rect.h
+/usr/include/2geom-1.3.0/2geom/sbasis-2d.h
+/usr/include/2geom-1.3.0/2geom/sbasis-curve.h
+/usr/include/2geom-1.3.0/2geom/sbasis-geometric.h
+/usr/include/2geom-1.3.0/2geom/sbasis-math.h
+/usr/include/2geom-1.3.0/2geom/sbasis-poly.h
+/usr/include/2geom-1.3.0/2geom/sbasis-to-bezier.h
+/usr/include/2geom-1.3.0/2geom/sbasis.h
+/usr/include/2geom-1.3.0/2geom/solver.h
+/usr/include/2geom-1.3.0/2geom/svg-path-parser.h
+/usr/include/2geom-1.3.0/2geom/svg-path-writer.h
+/usr/include/2geom-1.3.0/2geom/sweep-bounds.h
+/usr/include/2geom-1.3.0/2geom/sweeper.h
+/usr/include/2geom-1.3.0/2geom/symbolic/determinant-minor.h
+/usr/include/2geom-1.3.0/2geom/symbolic/implicit.h
+/usr/include/2geom-1.3.0/2geom/symbolic/matrix.h
+/usr/include/2geom-1.3.0/2geom/symbolic/multi-index.h
+/usr/include/2geom-1.3.0/2geom/symbolic/multipoly.h
+/usr/include/2geom-1.3.0/2geom/symbolic/mvpoly-tools.h
+/usr/include/2geom-1.3.0/2geom/symbolic/polynomial.h
+/usr/include/2geom-1.3.0/2geom/symbolic/unity-builder.h
+/usr/include/2geom-1.3.0/2geom/transforms.h
+/usr/include/2geom-1.3.0/2geom/utils.h
 /usr/lib64/cmake/2Geom/2GeomConfig.cmake
 /usr/lib64/cmake/2Geom/2GeomConfigVersion.cmake
 /usr/lib64/cmake/2Geom/2GeomTargets-relwithdebinfo.cmake
@@ -3864,30 +4132,38 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/inkscape/libinkscape_base.so
-/V3/usr/lib64/lib2geom.so.1.2.0
-/V4/usr/lib64/inkscape/libinkscape_base.so
-/V4/usr/lib64/lib2geom.so.1.2.0
+/V3/usr/lib64/inkscape/libinkscape_base.so.1.3.0.0
+/V3/usr/lib64/lib2geom.so.1.3.0
+/V4/usr/lib64/inkscape/libinkscape_base.so.1.3.0.0
+/V4/usr/lib64/lib2geom.so.1.3.0
 /usr/lib64/inkscape/libinkscape_base.so
-/usr/lib64/lib2geom.so.1.2.0
+/usr/lib64/inkscape/libinkscape_base.so.1.3.0.0
+/usr/lib64/lib2geom.so.1.3.0
 
 %files license
 %defattr(0644,root,root,0755)
+/usr/share/package-licenses/inkscape/0315f8fa18770a489890f8448111722aca24b8ec
 /usr/share/package-licenses/inkscape/1173a04f617603e4ca31baf10bdf64dd12ab6a97
 /usr/share/package-licenses/inkscape/2c44314e318a9f91eef499856d0680012dd2fd56
+/usr/share/package-licenses/inkscape/2cc384b53d50baa25a960aa83b0ac0edca682fa7
 /usr/share/package-licenses/inkscape/3d26ef78de688b41b93a839580a6ba974817798e
 /usr/share/package-licenses/inkscape/46cd8571ad470b0aaca803b9c9bf68078e3732a9
 /usr/share/package-licenses/inkscape/48627efeaa5f25a96bc3309a41302db6610057eb
 /usr/share/package-licenses/inkscape/5bcb33f2fded13179cea6ac04abea4322905b61b
+/usr/share/package-licenses/inkscape/5fb362ef1680e635fe5fb212b55eef4db9ead48f
 /usr/share/package-licenses/inkscape/7898de9d8a0026da533e44a786a17e435d7697f0
+/usr/share/package-licenses/inkscape/8088b44375ef05202c0fca4e9e82d47591563609
 /usr/share/package-licenses/inkscape/86191ae5b891f816f9a3dd21ab55002122dd7651
 /usr/share/package-licenses/inkscape/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+/usr/share/package-licenses/inkscape/9a13113b89f7985efe22a28b8e4ad1ace7f2b5d1
 /usr/share/package-licenses/inkscape/a3e68c396609d16f6816c6945afc803c13632d05
+/usr/share/package-licenses/inkscape/a4233e56493311ffd59845410b6e156f03b07335
 /usr/share/package-licenses/inkscape/a5ebeacb0adf789eb0f6152b145f37b54767190f
 /usr/share/package-licenses/inkscape/a8a12e6867d7ee39c21d9b11a984066099b6fb6b
 /usr/share/package-licenses/inkscape/aba8d76d0af67d57da3c3c321caa59f3d242386b
 /usr/share/package-licenses/inkscape/b86df424f2aef1ecbaded5e64543891e21fa881f
 /usr/share/package-licenses/inkscape/d7a08db444b06a236030a28b1ba914ffbc2cde33
+/usr/share/package-licenses/inkscape/d888f729a340181e37b0b2fb25c2942d5005e6a2
 /usr/share/package-licenses/inkscape/e9982175c2726ba1063e41ec2fad9c5e1e2f60c1
 /usr/share/package-licenses/inkscape/ec9647c584b2643c86beef5d4888c1ba66784d57
 /usr/share/package-licenses/inkscape/ed328ea8eb39f368373b8b02adfbb23db3f860ac
@@ -3900,10 +4176,11 @@ popd
 /usr/share/man/es/man1/inkview.1.gz
 /usr/share/man/fr/man1/inkscape.1.gz
 /usr/share/man/fr/man1/inkview.1.gz
-/usr/share/man/hr/man1/inkscape.1.gz
 /usr/share/man/hr/man1/inkview.1.gz
 /usr/share/man/hu/man1/inkscape.1.gz
 /usr/share/man/hu/man1/inkview.1.gz
+/usr/share/man/ko/man1/inkscape.1.gz
+/usr/share/man/ko/man1/inkview.1.gz
 /usr/share/man/man1/inkscape.1.gz
 /usr/share/man/man1/inkview.1.gz
 /usr/share/man/pt_BR/man1/inkview.1.gz

@@ -1,3 +1,4 @@
+ld-linux-x86-64.so.2
 libX11.so.6
 libatk-1.0.so.0
 libatkmm-1.6.so.1
@@ -9,6 +10,7 @@ libcairomm-1.0.so.1
 libcdr-0.1.so.1
 libdouble-conversion.so.3
 libenchant-2.so.2
+libepoxy.so.0
 libfontconfig.so.1
 libfreetype.so.6
 libgc.so.1
@@ -28,6 +30,7 @@ libgslcblas.so.0
 libgspell-1.so.2
 libgtk-3.so.0
 libgtkmm-3.0.so.1
+libgtksourceview-4.so.0
 libharfbuzz.so.0
 libjpeg.so.62
 liblcms2.so.2
