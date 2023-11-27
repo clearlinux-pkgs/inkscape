@@ -1,6 +1,5 @@
 ld-linux-x86-64.so.2
 libX11.so.6
-libatk-1.0.so.0
 libatkmm-1.6.so.1
 libboost_filesystem.so.1.77.0
 libc.so.6
@@ -9,7 +8,6 @@ libcairo.so.2
 libcairomm-1.0.so.1
 libcdr-0.1.so.1
 libdouble-conversion.so.3
-libenchant-2.so.2
 libepoxy.so.0
 libfontconfig.so.1
 libfreetype.so.6
@@ -35,14 +33,13 @@ libharfbuzz.so.0
 libjpeg.so.62
 liblcms2.so.2
 libm.so.6
-libncursesw.so.6
 libpango-1.0.so.0
 libpangocairo-1.0.so.0
 libpangoft2-1.0.so.0
 libpangomm-1.4.so.1
 libpng16.so.16
 libpoppler-glib.so.8
-libpoppler.so.130
+libpoppler.so.133
 libpotrace.so.0
 libreadline.so.8
 librevenge-0.0.so.0
