@@ -7,7 +7,7 @@
 #
 Name     : inkscape
 Version  : 1.3.2
-Release  : 102
+Release  : 103
 URL      : https://inkscape.org/gallery/item/44615/inkscape-1.3.2.tar.xz
 Source0  : https://inkscape.org/gallery/item/44615/inkscape-1.3.2.tar.xz
 Summary  : Professional vector graphics editor
@@ -163,7 +163,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1717449825
+export SOURCE_DATE_EPOCH=1718855859
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -257,7 +257,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1717449825
+export SOURCE_DATE_EPOCH=1718855859
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/inkscape
 cp %{_builddir}/inkscape-%{version}_2023-11-25_091e20ef0f/CMakeScripts/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/inkscape/ff3ed70db4739b3c6747c7f624fe2bad70802987 || :
