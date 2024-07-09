@@ -7,7 +7,7 @@
 #
 Name     : inkscape
 Version  : 1.3.2
-Release  : 104
+Release  : 105
 URL      : https://inkscape.org/gallery/item/44615/inkscape-1.3.2.tar.xz
 Source0  : https://inkscape.org/gallery/item/44615/inkscape-1.3.2.tar.xz
 Summary  : Professional vector graphics editor
