@@ -2,3 +2,4 @@
 backport-Fix-build-with-poppler-24.04.0.patch
 0001-Move-to-C-20.patch
 0002-fix-build-with-poppler-24.05.0.patch
+backport-fix-build-with-libxml2-2.12.patch
