@@ -10,7 +10,6 @@ cairo-dev
 dbus-dev
 double-conversion-dev
 glibmm-dev
-gtkmm2-dev
 gtkmm3-dev
 intltool
 intltool-dev
@@ -18,6 +17,8 @@ lcms2-dev
 libjpeg-turbo-dev
 libwpg-dev
 pango-dev
+poppler-dev
+poppler-extras
 popt-dev
 potrace-dev
 pypi-cython

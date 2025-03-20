@@ -1,5 +1,5 @@
-#0001-CMake-add-dependency-on-pofiles-for-default_template.patch
-backport-Fix-build-with-poppler-24.04.0.patch
-0001-Move-to-C-20.patch
-0002-fix-build-with-poppler-24.05.0.patch
-backport-fix-build-with-libxml2-2.12.patch
+backport-22304ae8034d067670a9f95022083a75fac92b4c.patch
+backport-0399372ec240d23e0e70548237a541f2b5bf0f34.patch
+backport-874dcfbd303bc7a1bddb6f34aebbb4dba8eda771.patch
+backport-c9046810d899a408bfbd489aad91872b1203ee6d.patch
+backport-9754274ea0ee76d9888ec0b306885ecba6926702.patch
