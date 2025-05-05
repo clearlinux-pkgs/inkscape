@@ -7,7 +7,7 @@
 #
 Name     : inkscape
 Version  : 1.4
-Release  : 119
+Release  : 120
 URL      : https://inkscape.org/gallery/item/53679/inkscape-1.4.tar.xz
 Source0  : https://inkscape.org/gallery/item/53679/inkscape-1.4.tar.xz
 Summary  : Professional vector graphics editor
